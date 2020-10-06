@@ -1,7 +1,7 @@
 package com.example.retrofit.apipackage;
 
-import com.example.retrofit.LoginResponse;
-import com.example.retrofit.login;
+import com.example.retrofit.Response.LoginResponse;
+import com.example.retrofit.ModelClass.login;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignupActivity">
+    tools:context=".UI.SignupActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,33 +13,20 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:fontFamily="@font/averia_gruesa_libre"
-            android:text="Teacher's sign up"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="40dp"
-            android:fontFamily="sans-serif-light"
+            android:layout_marginStart="36dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="120dp"
+            android:fontFamily="@font/abeezee"
             android:text="Full Name"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/etname"
@@ -64,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
             android:layout_marginTop="30dp"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="@font/abeezee"
             android:text="Email "
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +66,7 @@
             android:ems="10"
             android:fontFamily="@font/droid_sans"
             android:hint="Enter your email address"
-            android:inputType="textPersonName"
+            android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
             android:layout_marginTop="30dp"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="@font/abeezee"
             android:text="Password "
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +94,7 @@
             android:ems="10"
             android:fontFamily="@font/droid_sans"
             android:hint="Enter password"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
             android:padding="10dp"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="35dp"
             android:layout_marginTop="30dp"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="@font/abeezee"
             android:text="Confirm Password"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -136,25 +122,38 @@
             android:ems="10"
             android:fontFamily="@font/droid_sans"
             android:hint="Re-enter password"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
             android:padding="10dp"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
+
+        <TextView
+            android:id="@+id/alreadyhave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="84dp"
+            android:layout_marginLeft="84dp"
+            android:layout_marginTop="64dp"
+            android:fontFamily="@font/abeezee"
+            android:text="Already have an account? "
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnsignup" />
+
         <TextView
             android:id="@+id/tvlogin"
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:layout_marginTop="25dp"
-            android:fontFamily="@font/droid_sans"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/abeezee"
             android:gravity="center"
-            android:text="Already have an account? Login"
+            android:text="Login"
+            android:textColor="#425FED"
             android:textSize="16sp"
             android:textStyle="normal|italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnsignup" />
+            app:layout_constraintStart_toEndOf="@+id/alreadyhave"
+            app:layout_constraintTop_toTopOf="@+id/alreadyhave" />
 
         <Button
             android:id="@+id/btnsignup"
@@ -166,28 +165,13 @@
             android:fontFamily="sans-serif-light"
             android:text="Create account"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="#fff"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etconfirmpassword" />
 
-        <TextView
-            android:id="@+id/tvstudent"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/averia_gruesa_libre"
-            android:gravity="center"
-            android:text="Sign up as student"
-            android:textColor="#425FED"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.549"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvlogin" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

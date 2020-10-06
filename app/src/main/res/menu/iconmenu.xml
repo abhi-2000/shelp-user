@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+            <item
+                android:id="@+id/home"
+                android:icon="@drawable/home_24"
+                android:title="Home" />
+            <item
+                android:id="@+id/bookmark"
+                android:icon="@drawable/bookmark_24"
+                android:title="Bookmarks" />
+
+
+
+    <item android:title="Category">
+        <menu>
+            <item
+                android:id="@+id/web"
+                android:title="Web Development" />
+            <item
+                android:id="@+id/android"
+                android:title="Android Development" />
+            <item
+                android:id="@+id/photography"
+                android:title="Photography" />
+            <item
+                android:id="@+id/graphic"
+                android:title="Graphic Designing" />
+            <item
+                android:id="@+id/react"
+                android:title="React" />
+            <item
+                android:id="@+id/node"
+                android:title="Node" />
+        </menu>
+    </item>
+    <item
+
+        android:title="More">
+
+        <menu>
+            <item
+                android:id="@+id/help"
+                android:title="Help" />
+        </menu>
+    </item>
+
+
+</menu>

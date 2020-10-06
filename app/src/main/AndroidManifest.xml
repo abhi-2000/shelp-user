@@ -12,10 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SignupActivity"></activity>
-        <activity android:name=".otp" />
-        <activity android:name=".loginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ParticularCategoryActivity"></activity>
+        <activity android:name=".ResetotpConfirm" />
+        <activity android:name=".resetotp" />
+        <activity android:name=".UI.CourseDetail" />
+        <activity android:name=".UI.student" />
+        <activity android:name=".UI.SignupActivity" />
+        <activity android:name=".UI.otp" />
+        <activity android:name=".UI.loginActivity" />
+        <activity android:name=".resetPassword" />
+        <activity android:name=".UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

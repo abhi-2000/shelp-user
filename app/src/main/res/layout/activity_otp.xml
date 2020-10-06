@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".otp">
+    tools:context=".UI.otp">
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="202dp"
-        android:layout_height="81dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
-        android:fontFamily="@font/droid_sans"
+        android:fontFamily="@font/abeezee"
         android:text="Confirm your Email"
-        android:textSize="32sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.239"
@@ -23,11 +23,14 @@
     <TextView
         android:id="@+id/textView7"
         android:layout_width="355dp"
-        android:layout_height="38dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="60dp"
-        android:layout_marginTop="80dp"
-        android:text="Enter the OTP we have send on your  email"
-        android:textSize="16sp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="84dp"
+        android:fontFamily="@font/abeezee"
+        android:text="Enter the OTP we have send you on your  email"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -38,7 +41,9 @@
         android:layout_marginStart="68dp"
         android:layout_marginLeft="68dp"
         android:layout_marginTop="40dp"
+        android:fontFamily="@font/abeezee"
         android:text="OTP"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -51,7 +56,7 @@
         android:background="@drawable/background"
         android:ems="10"
         android:hint="Enter OTP"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:padding="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -63,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="60dp"
         android:layout_marginTop="45dp"
+        android:fontFamily="@font/abeezee"
         android:text="Didn't receive OTP?"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,9 +81,10 @@
         android:layout_marginHorizontal="80dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:textColor="#425FED"
         android:layout_marginTop="45dp"
+        android:fontFamily="@font/abeezee"
         android:text=" Resend"
+        android:textColor="#425FED"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/notreceived"
         app:layout_constraintTop_toBottomOf="@+id/etotp" />
@@ -87,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="60dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="45dp"
         android:background="@drawable/bg"
         android:text="Confirm email"
         android:textAllCaps="false"
@@ -97,14 +104,27 @@
         app:layout_constraintTop_toBottomOf="@+id/tvresend_otp" />
 
     <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginLeft="84dp"
+        android:layout_marginTop="92dp"
+        android:fontFamily="@font/abeezee"
+        android:text="Already have an account? "
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_confirmemail" />
+
+    <TextView
         android:id="@+id/tv_login1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:text="Already have an account ? Login"
+        android:text="Login"
+        android:textColor="#425FED"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_confirmemail" />
+        android:fontFamily="@font/abeezee"
+        app:layout_constraintBottom_toBottomOf="@+id/textView10"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toTopOf="@+id/textView10" />
 </androidx.constraintlayout.widget.ConstraintLayout>
