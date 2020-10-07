@@ -48,7 +48,7 @@ public class loginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(loginActivity.this, resetotp.class);
-                intent.putExtra("email",emailtxt);
+                finish();
                 startActivity(intent);
 
             }
@@ -56,15 +56,14 @@ public class loginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 LoginUser();
             }
         });
         findViewById(R.id.tv_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 Intent intent=new Intent(loginActivity.this, SignupActivity.class);
+                finish();
                 startActivity(intent);
             }
         });
@@ -118,16 +117,16 @@ public class loginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), response.body().getMessage() + " " + response.body().getUsername() + " " + response.body().getToken(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                     String token = response.body().getToken();
-                    Toast.makeText(getApplicationContext(), token, Toast.LENGTH_LONG).show();
+                    String userId=response.body().getUserId();
                    // SharedPreferences sharedPreferences = getSharedPreferences("t", MODE_PRIVATE);
                     //SharedPreferences.Editor editor = sharedPreferences.edit();
                     //editor.putString("str", token);
                     //editor.apply();
                     Sharedprefs.saveSharedsetting(loginActivity.this,"Clip" ,"false");
-                    Sharedprefs.sharedprefsave(getApplicationContext(), response.body().getUsername(),token);
-                    Intent islogged = new Intent(getApplicationContext(), MainActivity.class);
+                    Sharedprefs.sharedprefsave(getApplicationContext(), response.body().getUsername(),token,userId);
+                    Intent islogged = new Intent(getApplicationContext(), student.class);
                     startActivity(islogged);
                     finish();
 

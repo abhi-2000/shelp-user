@@ -59,12 +59,13 @@ public class otp extends AppCompatActivity implements View.OnClickListener {
                                        public void run() {
                                            resend.setEnabled(true);
                                        }
-                                   }, 3*60*100);
+                                   }, 300 * 100);
                 resend();
                 break;
 
             case R.id.tv_login1:
                 Intent intent=new Intent(this, loginActivity.class);
+                finish();
                 startActivity(intent);
                 break;
         }
@@ -115,8 +116,9 @@ public class otp extends AppCompatActivity implements View.OnClickListener {
                              OtpResponse res = response.body();
                              Toast.makeText(otp.this, res.getMessage(), Toast.LENGTH_LONG).show();
                              Sharedprefs.saveSharedsetting(otp.this,"Clip" ,"false");
-                             Sharedprefs.sharedprefsave(getApplicationContext(), res.getUsername(),res.getToken());
+                             Sharedprefs.sharedprefsave(getApplicationContext(), res.getUsername(),res.getToken(),res.getUserId());
                              Intent isverified = new Intent(getApplicationContext(), student.class);
+                             isverified.putExtra("token",token);
                              startActivity(isverified);
                              finish();
 

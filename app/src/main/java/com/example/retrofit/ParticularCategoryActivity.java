@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.retrofit.Adapter.SecondAdapter;
 import com.example.retrofit.Adapter.firstAdapter;
+import com.example.retrofit.ModelClass.SecondModelClass;
 import com.example.retrofit.ModelClass.firstmodelclass;
 import com.example.retrofit.UI.student;
 import com.example.retrofit.apipackage.retroclient;
@@ -32,18 +34,19 @@ public class ParticularCategoryActivity extends AppCompatActivity {
     private String[] course_id = {};
     List<firstmodelclass> modleClassList = new ArrayList<>();
     RecyclerView rcv;
+    private List<SecondModelClass> secondModelClassList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_particular_course);
         rcv = findViewById(R.id.recyclerview);
-
-        Call<ResponseBody> call = retroclient
+        String str = getIntent().getStringExtra("cat");
+        Call<ResponseBody> call1 = retroclient
                 .getInstance()
                 .getapi()
-                .home("all");
-        call.enqueue(new Callback<ResponseBody>() {
+                .home(str);
+        call1.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
@@ -55,27 +58,26 @@ public class ParticularCategoryActivity extends AppCompatActivity {
                         JSONObject object = new JSONObject(str);
                         JSONArray jsonArray = object.getJSONArray("course");
                         for (int i = 0; i < jsonArray.length(); i++) {
+
                             JSONObject c = jsonArray.getJSONObject(i);
-                            String imageurl = "http://localhost:8080/Sat%20Oct%2003%202020-React.jpg";
+//                            String imageurl = "http://localhost:8080/Sat%20Oct%2003%202020-React.jpg";
 //                            String image = c.getString("imageurl");
 //                            image="http://localhost:8080/"+image;
-                            JSONObject c1 = c.getJSONObject("rating");
-                            float star = (float) c1.getDouble("rating");
+                            String imageurl = c.getString("imageurl");
+                            imageurl = "http://192.168.43.162:8080/" + imageurl;
+
                             String name = c.getString("name");
                             String title = c.getString("title");
-                            String id = c.getString("_id");
-                            course_name = Arrays.copyOf(course_name, course_name.length + 1);
-                            course_name[course_name.length - 1] = name;
-                            course_id = Arrays.copyOf(course_id, course_id.length + 1);
-                            course_id[course_id.length - 1] = id;
-//                            modleClassList.add(new firstmodelclass(imageurl, title, name, star));
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ParticularCategoryActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                            JSONObject rate = c.getJSONObject("rating");
+                            float star = (float) rate.getDouble("ratingFinal");
+                            secondModelClassList.add(new SecondModelClass(imageurl, title, name, star));
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ParticularCategoryActivity.this, LinearLayoutManager.VERTICAL, false);
                             rcv.setLayoutManager(linearLayoutManager);
-                            firstAdapter adapter = new firstAdapter(modleClassList);
-                            rcv.setAdapter(adapter);
-                            adapter.setOnItemClickListener((firstAdapter.OnItemClickListener) ParticularCategoryActivity.this);
-                            adapter.notifyDataSetChanged();
+                            SecondAdapter adapter1 = new SecondAdapter(secondModelClassList);
+                            rcv.setAdapter(adapter1);
+                            adapter1.notifyDataSetChanged();
                         }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -90,7 +92,6 @@ public class ParticularCategoryActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 

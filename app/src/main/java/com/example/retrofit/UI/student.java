@@ -20,7 +20,9 @@ import com.example.retrofit.Adapter.SecondAdapter;
 import com.example.retrofit.Adapter.firstAdapter;
 import com.example.retrofit.ModelClass.SecondModelClass;
 import com.example.retrofit.ModelClass.firstmodelclass;
+import com.example.retrofit.ParticularCategoryActivity;
 import com.example.retrofit.R;
+import com.example.retrofit.Sharedprefs;
 import com.example.retrofit.apipackage.retroclient;
 import com.google.android.material.navigation.NavigationView;
 
@@ -52,6 +54,7 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
+        checkuser();
         firstrv = findViewById(R.id.firstrv);
         secondrv = findViewById(R.id.secondrv);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -78,8 +81,11 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                         break;
 
                     case R.id.android:
-                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Android", Toast.LENGTH_LONG).show();
+                        Intent intent=new Intent(student.this, ParticularCategoryActivity.class);
+                        intent.putExtra("cat","ML");
                         drawerLayout.closeDrawer(GravityCompat.START);
+                        startActivity(intent);
                         break;
 
 
@@ -122,11 +128,16 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                         JSONObject object = new JSONObject(str);
                         JSONArray jsonArray = object.getJSONArray("course");
                         for (int i = 0; i < jsonArray.length(); i++) {
+
                             JSONObject c = jsonArray.getJSONObject(i);
-                            String imageurl = "http://localhost:8080/Sat%20Oct%2003%202020-React.jpg";
-//                            String image = c.getString("imageurl");
-//                            image="http://localhost:8080/"+image;
-                            float star = (float) c.getDouble("rating");
+//                            String imageurl = "http://localhost:8080/Sat%20Oct%2003%202020-React.jpg";
+                            String imageurl = c.getString("imageurl");
+                            imageurl = "http://192.168.43.162:8080/" + imageurl;
+//                            JSONObject c1=c.getJSONObject("rating");
+                            JSONObject rate = c.getJSONObject("rating");
+                            float star = (float) rate.getDouble("ratingFinal");
+
+//                            String star=rate.getString("ratingFinal");
                             String name = c.getString("name");
                             String title = c.getString("title");
                             String id = c.getString("_id");
@@ -142,6 +153,7 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                             adapter.setOnItemClickListener(student.this);
                             adapter.notifyDataSetChanged();
                         }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -177,20 +189,25 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                         JSONObject object = new JSONObject(str);
                         JSONArray jsonArray = object.getJSONArray("course");
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject c = jsonArray.getJSONObject(i);
-                            String imageurl = "http://localhost:8080/Sat%20Oct%2003%202020-React.jpg";
+                            if (i % 2 == 0) {
+                                JSONObject c = jsonArray.getJSONObject(i);
+//                            String imageurl = "http://localhost:8080/Sat%20Oct%2003%202020-React.jpg";
 //                            String image = c.getString("imageurl");
 //                            image="http://localhost:8080/"+image;
-                            String name = c.getString("name");
-                            String title = c.getString("title");
+                                String imageurl = c.getString("imageurl");
+                                imageurl = "http://192.168.43.162:8080/" + imageurl;
 
-                            float star = (float) c.getDouble("rating");
-                            secondModelClassList.add(new SecondModelClass(imageurl, title, name, star));
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(student.this, LinearLayoutManager.VERTICAL, false);
-                            secondrv.setLayoutManager(linearLayoutManager);
-                            SecondAdapter adapter1 = new SecondAdapter(secondModelClassList);
-                            secondrv.setAdapter(adapter1);
-                            adapter1.notifyDataSetChanged();
+                                String name = c.getString("name");
+                                String title = c.getString("title");
+                                JSONObject rate = c.getJSONObject("rating");
+                                float star = (float) rate.getDouble("ratingFinal");
+                                secondModelClassList.add(new SecondModelClass(imageurl, title, name, star));
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(student.this, LinearLayoutManager.VERTICAL, false);
+                                secondrv.setLayoutManager(linearLayoutManager);
+                                SecondAdapter adapter1 = new SecondAdapter(secondModelClassList);
+                                secondrv.setAdapter(adapter1);
+                                adapter1.notifyDataSetChanged();
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -214,10 +231,23 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
     public void onItemClick(int position) {
         Intent intent = new Intent(student.this, CourseDetail.class);
         String id = course_id[position];
-        String name=course_name[position];
-        intent.putExtra("id", id);
+        String name = course_name[position];
+        intent.putExtra("courseID", id);
+//        intent.putExtra("userID",userid);
         intent.putExtra("course_name", name);
         Toast.makeText(student.this, course_id[position].toString(), Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
+public void checkuser()
+{
+    Boolean check= Boolean.valueOf(Sharedprefs.readShared(student.this,"Clip","true"));
+
+    Intent intro = new Intent(student.this, SignupActivity.class);
+    intro.putExtra("Clip",check);
+
+    if(check){
+        finish();
+        startActivity(intro);
+    }
+}
 }

@@ -1,6 +1,5 @@
 package com.example.retrofit.Adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +85,6 @@ import java.util.List;
             public void setData(String imageurl, String title, String tutor, float rating) {
                 Picasso.get().load(imageurl).into(image);
                 text1.setText(title);
-                Log.d("abhishek", String.valueOf(text1));
                 text2.setText(tutor);
                 String rate=Float.toString(rating);
                 startrate.setText(rate);

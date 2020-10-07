@@ -66,7 +66,7 @@ public class Sharedprefs {
         editor.putString(setname,setvalue);
         editor.apply();
     }
-    public static void sharedprefsave(Context ctx, String name,String token){
+    public static void sharedprefsave(Context ctx, String name,String token,String userId){
         SharedPreferences prefs= ctx.getSharedPreferences("Name",0);
         SharedPreferences.Editor prefedit= prefs.edit();
         prefedit.putString("Name", name);
@@ -75,5 +75,11 @@ public class Sharedprefs {
         SharedPreferences.Editor prefedit_token= prefs_token.edit();
         prefedit_token.putString("Token", token);
         prefedit_token.commit();
+        SharedPreferences prefs_userid= ctx.getSharedPreferences("userId",0);
+        SharedPreferences.Editor prefsedit_userid= prefs_userid.edit();
+        prefedit.putString("userId", userId);
+        prefsedit_userid.commit();
+
     }
+
 }

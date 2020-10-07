@@ -9,7 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.retrofit.UI.SignupActivity;
+import com.example.retrofit.UI.student;
 import com.example.retrofit.apipackage.retroclient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -19,18 +26,18 @@ import retrofit2.Response;
 public class resetPassword extends AppCompatActivity {
 
     EditText pass1, pass2;
-    String p1, p2;
+    String p1, p2, email;
     Button reset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_password);
-        pass1 = findViewById(R.id.password1);
-        pass2 = findViewById(R.id.password2);
-        reset = findViewById(R.id.button);
+        setContentView(R.layout.activity_confirm_new_pass);
+        pass1 = findViewById(R.id.etpassword);
+        pass2 = findViewById(R.id.etconfirmpassword);
+        reset = findViewById(R.id.btnreset);
         Intent intent = getIntent();
-        final String email = intent.getStringExtra("email");
+        email = intent.getStringExtra("email");
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,11 +69,22 @@ public class resetPassword extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (!response.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                            }
-                            assert response.body() != null;
-                            Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_LONG).show();
+                                assert response.errorBody() != null;
+                                Toast.makeText(getApplicationContext(), response.code(), Toast.LENGTH_LONG).show();
+                            } else {
+                                try {
+                                    String st = response.body().string();
+                                    JSONObject obj = new JSONObject(st);
+                                    String msg = obj.getString("messsage");
+                                    Toast.makeText(resetPassword.this, msg, Toast.LENGTH_LONG).show();
+                                    Intent i = new Intent(resetPassword.this, SignupActivity.class);
+                                    finish();
+                                    startActivity(i);
+                                } catch (IOException | JSONException e) {
+                                    e.printStackTrace();
+                                }
 
+                            }
                         }
 
                         @Override

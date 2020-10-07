@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.retrofit.Response.OtpResponse;
 import com.example.retrofit.Response.ResetpassotpResponse;
+import com.example.retrofit.UI.loginActivity;
 import com.example.retrofit.UI.otp;
 import com.example.retrofit.apipackage.course;
 import com.example.retrofit.apipackage.retroclient;
@@ -37,7 +38,14 @@ public class resetotp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resetotp);
         email_txt = findViewById(R.id.edittxtEmailreset);
-
+        findViewById(R.id.tv_login1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(resetotp.this, loginActivity.class);
+                finish();
+                startActivity(i);
+            }
+        });
 
         findViewById(R.id.btn_resetotp).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,12 +58,14 @@ public class resetotp extends AppCompatActivity {
                 } else {
                     sent();
 
+
                 }
             }
         });
     }
+
     private void sent() {
-        course cr=new course(email);
+        course cr = new course(email);
 
         Call<ResponseBody> call1 = retroclient
                 .getInstance()
@@ -66,36 +76,38 @@ public class resetotp extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call1, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "wrong", Toast.LENGTH_LONG).show();
-//                    try {
-//                        assert response.errorBody() != null;
-//                        String string = response.errorBody().string();
-//                        JSONObject jsonObject1 = new JSONObject(string);
-//                        String wrong = jsonObject1.getString("msg");
-//                        Toast.makeText(getApplicationContext(), wrong, Toast.LENGTH_LONG).show();
-//                    } catch (JSONException | IOException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        assert response.errorBody() != null;
+                        String string = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(string);
+                        String wrong = jsonObject1.getString("msg");
+                        Toast.makeText(getApplicationContext(), wrong, Toast.LENGTH_LONG).show();
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(), "OTP sent", Toast.LENGTH_LONG).show();
-//                    try {
-//                        assert response.body() != null;
-//                        String str = response.body().string();
-//                        JSONObject object = new JSONObject(str);
-//                        JSONObject obj2 = object.getJSONObject("result");
-//                        token = obj2.getString("token");
-//                        Intent intent = new Intent(resetotp.this, ResetotpConfirm.class);
-//                        intent.putExtra("token", token);
-//                        startActivity(intent);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        assert response.body() != null;
+                        String str = response.body().string();
+                        JSONObject object = new JSONObject(str);
+                        JSONObject obj2 = object.getJSONObject("result");
+                        token = obj2.getString("token");
+                        Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(resetotp.this, ResetotpConfirm.class);
+                        intent.putExtra("token", token);
+                        intent.putExtra("email",email);
+                        finish();
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
-            public void onFailure (Call < ResponseBody > call1, Throwable t){
+            public void onFailure(Call<ResponseBody> call1, Throwable t) {
                 Toast.makeText(getApplicationContext(), "failure:" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

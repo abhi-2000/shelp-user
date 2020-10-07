@@ -126,10 +126,10 @@
 
         <ImageView
             android:id="@+id/imageView2download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginTop="32dp"
-            android:background="@drawable/icons8_download"
+            android:background="@drawable/icons8_chat_room_1"
             app:layout_constraintEnd_toEndOf="@+id/textView13"
             app:layout_constraintHorizontal_bias="0.444"
             app:layout_constraintStart_toStartOf="@+id/textView13"
@@ -139,11 +139,11 @@
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginLeft="28dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginLeft="44dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/abeezee"
-            android:text="Resources"
+            android:text="Contact"
             android:textColor="#000"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/creator"
@@ -151,26 +151,37 @@
 
         <ImageView
             android:id="@+id/imageView3Contact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginTop="32dp"
-            android:background="@drawable/icons8_chat_room_1"
+            android:background="@drawable/icons8_download"
+            android:onClick="contact"
             app:layout_constraintEnd_toEndOf="@+id/textView15"
             app:layout_constraintHorizontal_bias="0.285"
             app:layout_constraintStart_toStartOf="@+id/textView15"
             app:layout_constraintTop_toBottomOf="@+id/shoetdescription" />
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="28dp"
+            android:background="#C6C6C6"
+            app:layout_constraintBottom_toTopOf="@+id/backbrown"
+            app:layout_constraintEnd_toStartOf="@+id/imageView3Contact"
+            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintStart_toEndOf="@+id/imageView2download" />
+
         <TextView
             android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/abeezee"
-            android:text="Contact"
+            android:text="Resources"
             android:textColor="#000"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.358"
+            app:layout_constraintHorizontal_bias="0.611"
             app:layout_constraintStart_toEndOf="@+id/textView13"
             app:layout_constraintTop_toBottomOf="@+id/imageView3Contact" />
 

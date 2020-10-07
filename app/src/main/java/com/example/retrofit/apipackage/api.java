@@ -9,6 +9,8 @@ import com.example.retrofit.Response.SignupResponse;
 import com.example.retrofit.Verify;
 import com.example.retrofit.signup;
 
+import java.util.stream.Stream;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,6 +19,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Streaming;
 
 
 public interface api {
@@ -30,7 +33,7 @@ public interface api {
     @PUT("signup")
     Call<SignupResponse> createuser(@Body signup create);
 
-    @POST("reset-password")
+    @POST("signup/resetpassword")
     Call<ResponseBody> resetpass(@Body ResetPass reset);
 
 
@@ -38,10 +41,16 @@ public interface api {
     Call<ResponseBody> home(@Path("cat")String category);
 
     @GET("/course/coursename/{courseID}")
-    Call<ResponseBody> detail(@Header("token") String token, @Path("courseID")String id);
+    Call<ResponseBody> detail(@Path("courseID")String id , @Header("Authorization") String header);
 
     @POST("signup/resetOtp")
     Call<ResponseBody> sent(@Body course c);
     @POST("signup/checkOtp")
-    Call<ResponseBody> check(@Body String otp,String token);
+    Call<ResponseBody> check(@Body Checkotp check);
+
+    @Streaming
+    @GET("/home/download/{userId}")
+    Call<ResponseBody> download(@Path("userId") String userid,@Header("Authorization") String header);
+
+
 }
