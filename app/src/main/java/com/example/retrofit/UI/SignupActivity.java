@@ -27,16 +27,17 @@ import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText et_email,et_password,et_name,et_confirmpassword;
+    private EditText et_email, et_password, et_name, et_confirmpassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
 
-        et_name=findViewById(R.id.etname);
-        et_email=findViewById(R.id.etemail);
-        et_password=findViewById(R.id.etpassword);
-        et_confirmpassword= findViewById(R.id.etconfirmpassword);
+        et_name = findViewById(R.id.etname);
+        et_email = findViewById(R.id.etemail);
+        et_password = findViewById(R.id.etpassword);
+        et_confirmpassword = findViewById(R.id.etconfirmpassword);
 
         findViewById(R.id.btnsignup).setOnClickListener(this);
         findViewById(R.id.tvlogin).setOnClickListener(this);
@@ -45,52 +46,45 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void signup() {
-        String name=et_name.getText().toString();
-        final String email=et_email.getText().toString();
-        String password=et_password.getText().toString();
-        String confirmpassword=et_confirmpassword.getText().toString();
+        String name = et_name.getText().toString();
+        final String email = et_email.getText().toString();
+        String password = et_password.getText().toString();
+        String confirmpassword = et_confirmpassword.getText().toString();
 
-        if(name.isEmpty())
-        {
+        if (name.isEmpty()) {
             et_name.setError("Name cannot be empty");
             et_name.requestFocus();
             return;
         }
-        if(email.isEmpty())
-        {
+        if (email.isEmpty()) {
             et_email.setError("Email is required");
             et_email.requestFocus();
             return;
         }
 
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             et_email.setError("Enter a valid email");
             et_email.requestFocus();
             return;
         }
-        if(password.isEmpty())
-        {
+        if (password.isEmpty()) {
             et_password.setError("Password is required");
             et_password.requestFocus();
             return;
         }
-        if(password.length()<5)
-        {
+        if (password.length() < 5) {
             et_password.setError("Password must be atleast 5 characters long");
             et_password.requestFocus();
             return;
         }
 
-        if(!confirmpassword.equals(password))
-        {
+        if (!confirmpassword.equals(password)) {
             et_confirmpassword.setError("Passwords do not match");
             et_confirmpassword.requestFocus();
             return;
-        }
-        else
-        {
-            signup signin =new signup(name,email,password);
-            Call<SignupResponse> call= retroclient
+        } else {
+            signup signin = new signup(name, email, password);
+            Call<SignupResponse> call = retroclient
                     .getInstance()
                     .getapi()
                     .createuser(signin);
@@ -102,44 +96,44 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         if (response.code() == 201) {
                             SignupResponse res = response.body();
                             Toast.makeText(SignupActivity.this, res.getMessage(), Toast.LENGTH_LONG).show();
-                           Intent intent= new Intent(SignupActivity.this, otp.class);
-                            intent.putExtra("Token",res.getToken());
-                            intent.putExtra("email",email);
+                            Intent intent = new Intent(SignupActivity.this, otp.class);
+                            intent.putExtra("Token", res.getToken());
+                            intent.putExtra("email", email);
                             startActivity(intent);
-                            Log.d("token", res.getToken());
-                        }
-                        else {
+                            finish();
+                        } else {
                             String s = response.errorBody().string();
                             JSONObject jsonObject = new JSONObject(s);
-                            JSONArray parentarray= jsonObject.getJSONArray("data");
-                             JSONObject obj= parentarray.getJSONObject(0);
-                             String message = obj.getString("msg");
+                            JSONArray parentarray = jsonObject.getJSONArray("data");
+                            JSONObject obj = parentarray.getJSONObject(0);
+                            String message = obj.getString("msg");
                             Toast.makeText(SignupActivity.this, message, Toast.LENGTH_LONG).show();
+
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
                 }
+
                 @Override
                 public void onFailure(Call<SignupResponse> call, Throwable t) {
-                    Toast.makeText(SignupActivity.this, t.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignupActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         }
-        }
+    }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.btnsignup:
                 signup();
                 break;
 
             case R.id.tvlogin:
                 finish();
-                Intent intent=new Intent(this, loginActivity.class);
+                Intent intent = new Intent(this, loginActivity.class);
                 startActivity(intent);
                 break;
         }

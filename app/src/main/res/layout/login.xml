@@ -135,50 +135,26 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="152dp"
-            android:layout_marginLeft="152dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginLeft="136dp"
+            android:layout_marginTop="68dp"
             android:fontFamily="@font/abeezee"
             android:text="New user? "
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_signup"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/button" />
 
         <TextView
             android:id="@+id/tv_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
             android:fontFamily="@font/abeezee"
             android:text="Sign up"
             android:textColor="#536DFE"
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintTop_toTopOf="@+id/textView" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_margin="65dp"
-            android:background="#D3BAB9B9"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:fontFamily="@font/abeezee"
-            android:gravity="center"
-            android:text="Login as Teacher"
-            android:textColor="#536DFE"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

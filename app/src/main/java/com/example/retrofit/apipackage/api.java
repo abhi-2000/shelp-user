@@ -1,5 +1,4 @@
 package com.example.retrofit.apipackage;
-
 import com.example.retrofit.Reotp;
 import com.example.retrofit.ResetPass;
 import com.example.retrofit.Response.OtpResponse;
@@ -51,6 +50,4 @@ public interface api {
     @Streaming
     @GET("/home/download/{userId}")
     Call<ResponseBody> download(@Path("userId") String userid,@Header("Authorization") String header);
-
-
 }

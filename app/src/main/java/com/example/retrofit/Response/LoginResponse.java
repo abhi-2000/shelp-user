@@ -1,7 +1,7 @@
 package com.example.retrofit.Response;
 
 public class LoginResponse {
-    String message,token,username,userId;
+    String message, token, username, userId;
 
     public LoginResponse(String userId, String message, String username, String token) {
         this.userId = userId;

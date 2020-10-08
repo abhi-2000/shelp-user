@@ -40,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class student extends AppCompatActivity implements firstAdapter.OnItemClickListener {
+public class student extends AppCompatActivity implements firstAdapter.OnItemClickListener, SecondAdapter.OnItemClickListener {
     RecyclerView firstrv, secondrv;
     NavigationView nav;
     ActionBarDrawerToggle toggle;
@@ -48,6 +48,7 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
     List<firstmodelclass> modleClassList = new ArrayList<>();
     List<SecondModelClass> secondModelClassList = new ArrayList<>();
     private String[] course_id = {};
+    private String[] course_idtrend = {};
     private String[] course_name = {};
 
     @Override
@@ -69,23 +70,17 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.web:
-//                        final Intent intent = new Intent(Intent.ACTION_VIEW)
-//                                .setType("plain/text")
-//                                .setData(Uri.parse("cookbook@gmail.com"))
-//                                .setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-//                        intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
-//                        intent.putExtra(Intent.EXTRA_TEXT, "Feedback Message");
-//                        intent.putExtra(Intent.EXTRA_EMAIL, "cookbook@gmail.com");
-//                        startActivity(Intent.createChooser(intent, ""));
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-
-                    case R.id.android:
-                        Toast.makeText(getApplicationContext(), "Android", Toast.LENGTH_LONG).show();
-                        Intent intent=new Intent(student.this, ParticularCategoryActivity.class);
-                        intent.putExtra("cat","ML");
+                        Intent intent = new Intent(student.this, ParticularCategoryActivity.class);
+                        intent.putExtra("cat", "Web Designing");
                         drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
+                        break;
+
+                    case R.id.ml:
+                        Intent intent1 = new Intent(student.this, ParticularCategoryActivity.class);
+                        intent1.putExtra("cat", "ML");
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        startActivity(intent1);
                         break;
 
 
@@ -130,9 +125,9 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                         for (int i = 0; i < jsonArray.length(); i++) {
 
                             JSONObject c = jsonArray.getJSONObject(i);
-//                            String imageurl = "http://localhost:8080/Sat%20Oct%2003%202020-React.jpg";
+//                            String imageurl = "http://192.168.43.162:8080/Sat%20Oct%2003%202020-React.jpg";
                             String imageurl = c.getString("imageurl");
-                            imageurl = "http://192.168.43.162:8080/" + imageurl;
+                            imageurl = "https://shelp-webapp.herokuapp.com/" + imageurl;
 //                            JSONObject c1=c.getJSONObject("rating");
                             JSONObject rate = c.getJSONObject("rating");
                             float star = (float) rate.getDouble("ratingFinal");
@@ -195,7 +190,10 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
 //                            String image = c.getString("imageurl");
 //                            image="http://localhost:8080/"+image;
                                 String imageurl = c.getString("imageurl");
-                                imageurl = "http://192.168.43.162:8080/" + imageurl;
+                                imageurl = "https://shelp-webapp.herokuapp.com/" + imageurl;
+                                String id = c.getString("_id");
+                                course_idtrend = Arrays.copyOf(course_idtrend, course_idtrend.length + 1);
+                                course_idtrend[course_idtrend.length - 1] = id;
 
                                 String name = c.getString("name");
                                 String title = c.getString("title");
@@ -206,6 +204,7 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                                 secondrv.setLayoutManager(linearLayoutManager);
                                 SecondAdapter adapter1 = new SecondAdapter(secondModelClassList);
                                 secondrv.setAdapter(adapter1);
+                                adapter1.setOnItemClickListener(student.this);
                                 adapter1.notifyDataSetChanged();
                             }
                         }
@@ -231,23 +230,30 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
     public void onItemClick(int position) {
         Intent intent = new Intent(student.this, CourseDetail.class);
         String id = course_id[position];
-        String name = course_name[position];
+//        String name = course_name[position];
         intent.putExtra("courseID", id);
 //        intent.putExtra("userID",userid);
-        intent.putExtra("course_name", name);
-        Toast.makeText(student.this, course_id[position].toString(), Toast.LENGTH_SHORT).show();
+//        intent.putExtra("course_name", name);
+//        Toast.makeText(student.this, course_id[position].toString(), Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
-public void checkuser()
-{
-    Boolean check= Boolean.valueOf(Sharedprefs.readShared(student.this,"Clip","true"));
 
-    Intent intro = new Intent(student.this, SignupActivity.class);
-    intro.putExtra("Clip",check);
+    @Override
+    public void onItemClicked(int position) {
+            Intent intent = new Intent(this, CourseDetail.class);
+            intent.putExtra("courseID", course_idtrend[position]);
+            startActivity(intent);
+        }
 
-    if(check){
-        finish();
-        startActivity(intro);
+    public void checkuser() {
+        Boolean check = Boolean.valueOf(Sharedprefs.readShared(student.this, "Clip", "true"));
+
+        Intent intro = new Intent(student.this, SignupActivity.class);
+        intro.putExtra("Clip", check);
+
+        if (check) {
+            finish();
+            startActivity(intro);
+        }
     }
-}
 }

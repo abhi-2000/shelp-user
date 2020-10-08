@@ -60,7 +60,8 @@ public class otp extends AppCompatActivity implements View.OnClickListener {
                                            resend.setEnabled(true);
                                        }
                                    }, 300 * 100);
-                resend();
+                resendotp();
+
                 break;
 
             case R.id.tv_login1:
@@ -71,7 +72,7 @@ public class otp extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private void resend() {
+    private void resendotp() {
     Reotp reotp=new Reotp(token,email);
     Call<ResendResponse> call1= retroclient
             .getInstance()
@@ -82,9 +83,10 @@ public class otp extends AppCompatActivity implements View.OnClickListener {
         public void onResponse(Call<ResendResponse> call1, Response<ResendResponse> response) {
             if (!response.isSuccessful()) {
                 Toast.makeText(getApplicationContext(), "response:" + response.message(), Toast.LENGTH_LONG).show();
+            } else {
+                assert response.body() != null;
+                Toast.makeText(getApplicationContext(), "New OTP is send to your mail", Toast.LENGTH_LONG).show();
             }
-            assert response.body() != null;
-            Toast.makeText(getApplicationContext(),"New OTP is send to your mail", Toast.LENGTH_LONG).show();
         }
         @Override
         public void onFailure(Call<ResendResponse> call1, Throwable t) {
@@ -112,13 +114,12 @@ public class otp extends AppCompatActivity implements View.OnClickListener {
                  @Override
                  public void onResponse(Call<OtpResponse> call, Response<OtpResponse> response) {
                      try {
-                         if (response.code() == 200) {
+                         if (response.isSuccessful()) {
                              OtpResponse res = response.body();
                              Toast.makeText(otp.this, res.getMessage(), Toast.LENGTH_LONG).show();
                              Sharedprefs.saveSharedsetting(otp.this,"Clip" ,"false");
                              Sharedprefs.sharedprefsave(getApplicationContext(), res.getUsername(),res.getToken(),res.getUserId());
                              Intent isverified = new Intent(getApplicationContext(), student.class);
-                             isverified.putExtra("token",token);
                              startActivity(isverified);
                              finish();
 

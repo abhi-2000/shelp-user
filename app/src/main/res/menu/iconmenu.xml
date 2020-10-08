@@ -15,10 +15,10 @@
         <menu>
             <item
                 android:id="@+id/web"
-                android:title="Web Development" />
+                android:title="Web Designing" />
             <item
-                android:id="@+id/android"
-                android:title="Android Development" />
+                android:id="@+id/ml"
+                android:title="Machine Learning" />
             <item
                 android:id="@+id/photography"
                 android:title="Photography" />

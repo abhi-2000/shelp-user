@@ -16,16 +16,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-    public class SecondAdapter extends RecyclerView.Adapter<SecondAdapter.viewholder> {
+    public class SecondAdapter extends RecyclerView.Adapter<SecondAdapter.viewholder1> {
 
         private List<SecondModelClass> modleClassList;
-        private firstAdapter.OnItemClickListener mListener;
+        private SecondAdapter.OnItemClickListener mListener;
 
         public interface OnItemClickListener {
-            void onItemClick(int position);
+            void onItemClicked(int position);
         }
 
-        public void setOnItemClickListener(firstAdapter.OnItemClickListener listener) {
+        public void setOnItemClickListener(SecondAdapter.OnItemClickListener listener) {
             mListener = listener;
         }
 
@@ -35,13 +35,13 @@ import java.util.List;
 
         @NonNull
         @Override
-        public SecondAdapter.viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        public SecondAdapter.viewholder1 onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recondrv, viewGroup, false);
-            return new SecondAdapter.viewholder(view);
+            return new SecondAdapter.viewholder1(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull SecondAdapter.viewholder holder, int position) {
+        public void onBindViewHolder(@NonNull SecondAdapter.viewholder1 holder, int position) {
             String imgurl = modleClassList.get(position).getImageurl();
             String title = modleClassList.get(position).getTitle();
             String tutor = modleClassList.get(position).getTutor();
@@ -54,7 +54,7 @@ import java.util.List;
             return modleClassList.size();
         }
 
-        class viewholder extends RecyclerView.ViewHolder {
+        class viewholder1 extends RecyclerView.ViewHolder {
 
             private ImageView image;
             private TextView text1;
@@ -62,7 +62,7 @@ import java.util.List;
             TextView startrate;
             RatingBar star;
 
-            public viewholder(@NonNull View itemView) {
+            public viewholder1(@NonNull View itemView) {
                 super(itemView);
                 image = itemView.findViewById(R.id.img);
                 text1 = itemView.findViewById(R.id.nametxt);
@@ -74,9 +74,8 @@ import java.util.List;
                     public void onClick(View v) {
                         if (mListener != null) {
                             int position = getAdapterPosition();
-                            if (position != RecyclerView.NO_POSITION) {
-                                mListener.onItemClick(position);
-                            }
+                            if (position != RecyclerView.NO_POSITION)
+                                mListener.onItemClicked(position);
                         }
                     }
                 });

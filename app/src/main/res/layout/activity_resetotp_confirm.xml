@@ -48,9 +48,9 @@
         android:id="@+id/edittxtresetotp"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
         android:background="@drawable/background"
         android:fontFamily="@font/droid_sans"
         android:gravity="center|start"
@@ -62,56 +62,32 @@
         app:layout_constraintTop_toBottomOf="@+id/txtemail" />
 
 
-    <TextView
-        android:id="@+id/notreceived"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="60dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/abeezee"
-        android:text="Didn't receive OTP?"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittxtresetotp" />
-
-    <TextView
-        android:id="@+id/tvresend_otp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/abeezee"
-        android:text=" Resend"
-        android:textColor="#425FED"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/notreceived"
-        app:layout_constraintStart_toEndOf="@+id/notreceived" />
-
     <Button
         android:id="@+id/btn_confirrest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="66dp"
         android:background="@drawable/bg"
         android:text="Reset Password"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notreceived" />
+        app:layout_constraintTop_toBottomOf="@+id/edittxtresetotp" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
         android:layout_marginTop="56dp"
         android:fontFamily="@font/abeezee"
         android:text="Already have an account? "
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_confirrest" />
 
