@@ -1,4 +1,4 @@
-package com.example.retrofit;
+package com.example.retrofit.Response;
 
 public class Bookmark {
 String _id,_userID;

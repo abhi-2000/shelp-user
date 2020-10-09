@@ -83,7 +83,7 @@ public class firstAdapter extends RecyclerView.Adapter<firstAdapter.viewholder> 
         }
 
         public void setData(String imageurl, String title, String tutor, float rating) {
-            Picasso.get().load(imageurl).into(image);
+            Picasso.get().load(imageurl).error(R.drawable.shelplogo).into(image);
             text1.setText(title);
             text2.setText(tutor);
             String rate = Float.toString(rating);

@@ -1,15 +1,12 @@
 package com.example.retrofit.apipackage;
-import com.example.retrofit.Bookmark;
+import com.example.retrofit.Response.Bookmark;
 import com.example.retrofit.Reotp;
 import com.example.retrofit.ResetPass;
 import com.example.retrofit.Response.OtpResponse;
 import com.example.retrofit.Response.ResendResponse;
-import com.example.retrofit.Response.ResetpassotpResponse;
 import com.example.retrofit.Response.SignupResponse;
 import com.example.retrofit.Verify;
 import com.example.retrofit.signup;
-
-import java.util.stream.Stream;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -58,5 +55,7 @@ public interface api {
     Call<ResponseBody> unbookmark(@Body Bookmark book);
     @GET("users/userName/{userId}")
     Call<ResponseBody> bookcourse(@Path("userId")String id , @Header("Authorization") String header);
+    @GET("users/userName/{userId}")
+    Call<ResponseBody> bookcourse1(@Path("userId")String id , @Header("Authorization") String header);
 
 }

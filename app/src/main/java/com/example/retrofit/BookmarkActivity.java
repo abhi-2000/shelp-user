@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.retrofit.Adapter.SecondAdapter;
@@ -40,6 +41,7 @@ public class BookmarkActivity extends AppCompatActivity implements SecondAdapter
     private String[] course_idbook = {};
     private List<SecondModelClass> secondModelClassList = new ArrayList<>();
     private RecyclerView bookrv;
+    LinearLayout layoutlinear;
     ImageView nobookmark;
     ProgressDialog pd;
 
@@ -52,6 +54,7 @@ public class BookmarkActivity extends AppCompatActivity implements SecondAdapter
         SharedPreferences preference = getApplicationContext().getSharedPreferences("Token", 0);
         String head = "Bearer " + preference.getString("Token", null);
         bookrv = findViewById(R.id.rcvbookmark);
+        layoutlinear=findViewById(R.id.layoutlinear);
         nobookmark=findViewById(R.id.nobookmark);
         pd = new ProgressDialog(this);
         pd.setMessage("Loading");
@@ -71,8 +74,10 @@ public class BookmarkActivity extends AppCompatActivity implements SecondAdapter
                         JSONObject obj = new JSONObject(st);
                         JSONObject obj1 = obj.getJSONObject("course");
                         JSONArray jsonArray = obj1.getJSONArray("bookmarked");
-                        nobookmark.setVisibility(View.GONE);
+                        layoutlinear.setVisibility(View.VISIBLE);
                         for (int i = 0; i < jsonArray.length(); i++) {
+                            layoutlinear.setVisibility(View.GONE);
+                            bookrv.setVisibility(View.VISIBLE);
                             JSONObject c = jsonArray.getJSONObject(i);
                             String imageurl = c.getString("imageurl");
                             imageurl = "https://shelp-webapp.herokuapp.com/" + imageurl;
@@ -93,6 +98,7 @@ public class BookmarkActivity extends AppCompatActivity implements SecondAdapter
                             adapter1.setOnItemClickListener((SecondAdapter.OnItemClickListener) BookmarkActivity.this);
                             adapter1.notifyDataSetChanged();
                         }
+
                         pd.dismiss();
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -112,6 +118,11 @@ public class BookmarkActivity extends AppCompatActivity implements SecondAdapter
         Intent intent = new Intent(this, CourseDetail.class);
         intent.putExtra("courseID", course_idbook[position]);
         startActivity(intent);
+
+    }
+
+    public void gohome(View view) {
+        finish();
 
     }
 }

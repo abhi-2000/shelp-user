@@ -1,37 +1,21 @@
 package com.example.retrofit.UI;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.Manifest;
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.retrofit.Adapter.SecondAdapter;
-import com.example.retrofit.Bookmark;
-import com.example.retrofit.BookmarkActivity;
-import com.example.retrofit.ModelClass.SecondModelClass;
+import com.example.retrofit.Response.Bookmark;
 import com.example.retrofit.R;
-import com.example.retrofit.VideoList;
-import com.example.retrofit.apipackage.api;
 import com.example.retrofit.apipackage.retroclient;
 import com.example.retrofit.videoplayer;
 import com.squareup.picasso.Picasso;
@@ -40,11 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -70,7 +50,7 @@ public class CourseDetail extends AppCompatActivity {
     private String[] videourl = {};
     private ProgressDialog progressDialog;
     private WebView mWebview;
-    private String[] course_iddetail={};
+    private String[] course_iddetail = {};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +59,6 @@ public class CourseDetail extends AppCompatActivity {
         course_id = getIntent().getStringExtra("courseID");
 //        course_name = getIntent().getStringExtra("course_name");
         name = findViewById(R.id.textView9);
-        mWebview = findViewById(R.id.webview);
         download = findViewById(R.id.imageView3Contact);
         bookmark = findViewById(R.id.bookmark);
         unbookmark = findViewById(R.id.unbookmark);
@@ -92,6 +71,8 @@ public class CourseDetail extends AppCompatActivity {
         whatlearn = findViewById(R.id.whatyouwilllearn);
         description = findViewById(R.id.description);
         progressDialog = new ProgressDialog(this);
+        unbookmark.setVisibility(View.GONE);
+        bookmark.setVisibility(View.GONE);
 //        download = findViewById(R.id.imageView2download);
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("userId", 0);
         userid = preferences.getString("userId", null);
@@ -159,13 +140,10 @@ public class CourseDetail extends AppCompatActivity {
 //        });
 
 
-
-
-
         Call<ResponseBody> call1 = retroclient
                 .getInstance()
                 .getapi()
-                .bookcourse(userid, head);
+                .bookcourse1(userid, head);
         call1.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call1, Response<ResponseBody> response) {
@@ -178,19 +156,37 @@ public class CourseDetail extends AppCompatActivity {
                         JSONObject obj1 = obj.getJSONObject("course");
                         JSONArray jsonArray = obj1.getJSONArray("bookmarked");
 //                        nobookmark.setVisibility(View.GONE);
+                        if(jsonArray.length()==0)
+                            bookmark.setVisibility(View.VISIBLE);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject c = jsonArray.getJSONObject(i);
-                            String imageurl = c.getString("imageurl");
-                            imageurl = "https://shelp-webapp.herokuapp.com/" + imageurl;
-                            JSONObject rate = c.getJSONObject("rating");
-                            float star = (float) rate.getDouble("ratingFinal");
-                            String name = c.getString("name");
-                            String title = c.getString("title");
+//                            String imageurl = c.getString("imageurl");
+//                            imageurl = "https://shelp-webapp.herokuapp.com/" + imageurl;
+//                            JSONObject rate = c.getJSONObject("rating");
+//                            float star = (float) rate.getDouble("ratingFinal");
+//                            String name = c.getString("name");
+//                            String title = c.getString("title");
                             String id = c.getString("_id");
 //                            course_name = Arrays.copyOf(course_name, course_name.length + 1);
 //                            course_name[course_name.length - 1] = name;
-                            course_iddetail = Arrays.copyOf(course_iddetail, course_iddetail.length + 1);
-                            course_iddetail[course_iddetail.length - 1] = id;
+//                            Toast.makeText(getApplicationContext()," not Book",Toast.LENGTH_LONG).show();
+
+                            if(course_id.equals(id))
+                            {
+                                unbookmark.setVisibility(View.VISIBLE);
+                                bookmark.setVisibility(View.GONE);
+                                break;
+
+                            }
+                            else
+                            {
+                                unbookmark.setVisibility(View.GONE);
+                                bookmark.setVisibility(View.VISIBLE);
+                            }
+//                            course_iddetail = Arrays.copyOf(course_iddetail, course_iddetail.length + 1);
+//                            course_iddetail[course_iddetail.length - 1] = id;
+//                            Toast.makeText(getApplicationContext(),course_iddetail[i]+course_id,Toast.LENGTH_LONG).show();
+
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -204,23 +200,21 @@ public class CourseDetail extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//        boolean alreadyBook = false;
+//        for (String s : course_iddetail) {
+//            if (course_id == s) {
+//                alreadyBook = true;
+//                break;
+//            }
+//        }
+//        if (alreadyBook) {
+//            bookmark.setVisibility(View.GONE);
+//            unbookmark.setVisibility(View.VISIBLE);
+//        } else {
+//            bookmark.setVisibility(View.VISIBLE);
+//            unbookmark.setVisibility(View.GONE);
+//
+//        }
 
 //        //////////////////////////////////////////////////////////////////
         shortdesc = findViewById(R.id.shoetdescription);
@@ -238,6 +232,7 @@ public class CourseDetail extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
                 } else {
                     try {
+
                         String str = response.body().string();
                         JSONObject object = new JSONObject(str);
                         for (int i = 0; i < 1; i++) {
@@ -274,7 +269,7 @@ public class CourseDetail extends AppCompatActivity {
                             starbar.setRating(star);
                             String starrate = Float.toString(star);
                             name.setText(coursetitle);
-                            Picasso.get().load(image).into(topimg);
+                            Picasso.get().load(image).error(R.drawable.shelplogo).into(topimg);
                             tutor.setText(coursecreator);
                             rate.setText(starrate);
                             requirement.setText(courserequire);
@@ -333,7 +328,7 @@ public class CourseDetail extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         } else {
-                            String url="https://shelp-webapp.herokuapp.com/invoice-" +course_id+ ".pdf";
+                            String url = "https://shelp-webapp.herokuapp.com/invoice-" + course_id + ".pdf";
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                             startActivity(intent);
                         }
