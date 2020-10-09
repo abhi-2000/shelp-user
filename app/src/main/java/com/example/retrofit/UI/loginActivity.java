@@ -34,8 +34,7 @@ public class loginActivity extends AppCompatActivity {
     private EditText email, password;
     Button login;
     String emailtxt = "", passwordtxt = "";
-    TextView reset;
-
+     TextView reset;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +43,11 @@ public class loginActivity extends AppCompatActivity {
         login = findViewById(R.id.button);
         email = findViewById(R.id.edittxtEmail);
         password = findViewById(R.id.edittxtPass);
-        reset = findViewById(R.id.reset);
+        reset=findViewById(R.id.reset);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(loginActivity.this, resetotp.class);
+                Intent intent=new Intent(loginActivity.this, resetotp.class);
                 finish();
                 startActivity(intent);
 
@@ -63,7 +62,7 @@ public class loginActivity extends AppCompatActivity {
         findViewById(R.id.tv_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(loginActivity.this, SignupActivity.class);
+                Intent intent=new Intent(loginActivity.this, SignupActivity.class);
                 finish();
                 startActivity(intent);
             }
@@ -112,7 +111,7 @@ public class loginActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(string);
                         JSONArray jsonArray = jsonObject.getJSONArray("data");
                         JSONObject meals = jsonArray.getJSONObject(0);
-                        String wrong1 = meals.getString("msg");
+                        String wrong1=meals.getString("msg");
                         Toast.makeText(getApplicationContext(), wrong1, Toast.LENGTH_LONG).show();
                     } catch (JSONException | IOException e) {
                         e.printStackTrace();
@@ -120,14 +119,14 @@ public class loginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                     String token = response.body().getToken();
-                    Toast.makeText(getApplicationContext(), token, Toast.LENGTH_LONG).show();
-                    String userId = response.body().getUserId();
-                    // SharedPreferences sharedPreferences = getSharedPreferences("t", MODE_PRIVATE);
+                    Toast.makeText(getApplicationContext(),token,Toast.LENGTH_LONG).show();
+                    String userId=response.body().getUserId();
+                   // SharedPreferences sharedPreferences = getSharedPreferences("t", MODE_PRIVATE);
                     //SharedPreferences.Editor editor = sharedPreferences.edit();
                     //editor.putString("str", token);
                     //editor.apply();
-                    Sharedprefs.saveSharedsetting(loginActivity.this, "Clip", "false");
-                    Sharedprefs.sharedprefsave(getApplicationContext(), response.body().getUsername(), token, userId);
+                    Sharedprefs.saveSharedsetting(loginActivity.this,"Clip" ,"false");
+                    Sharedprefs.sharedprefsave(getApplicationContext(), response.body().getUsername(),token,response.body().getUserId());
                     Intent islogged = new Intent(getApplicationContext(), student.class);
                     startActivity(islogged);
                     finish();

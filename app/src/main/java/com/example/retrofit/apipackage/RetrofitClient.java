@@ -5,6 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
         public static final String BASE_URL = "https://shelp-webapp.herokuapp.com/";
+//        http://192.168.43.162:8080/";
         public static RetrofitClient mInstance;
         public Retrofit retrofit;
 

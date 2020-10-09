@@ -18,7 +18,7 @@
             <ImageView
                 android:id="@+id/img"
                 android:layout_width="135dp"
-                android:layout_height="148dp" />
+                android:layout_height="128dp" />
 
             <TextView
                 android:id="@+id/nametxt"
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tutortxt"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginTop="16dp"
                 android:layout_toRightOf="@+id/img" />
 
@@ -61,6 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tutortxt"
+                android:layout_marginLeft="-13dp"
                 android:layout_toRightOf="@+id/img"
                 android:numStars="5"
                 android:scaleX="0.35"

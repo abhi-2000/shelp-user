@@ -2,6 +2,7 @@ package com.example.retrofit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -15,6 +16,7 @@ public class videoplayer extends AppCompatActivity {
     String url1;
     int i = 0;
     ArrayList<String> videolist = new ArrayList<String>();
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +50,19 @@ public class videoplayer extends AppCompatActivity {
 //                }
 //            });
 //        }
+        pd=new ProgressDialog(this);
+        pd.setMessage("Please Wait..");
+        pd.show();
         Uri uri = Uri.parse(videolist.get(0));
         videoView.start();
         videoView.setVideoURI(uri);
         MediaController mediaController = new MediaController(this);
         videoView.setMediaController(mediaController);
         mediaController.setAnchorView(videoView);
+        pd.dismiss();
         videoView.stopPlayback();
+        if(i==videolist.size())
+            finish();
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {

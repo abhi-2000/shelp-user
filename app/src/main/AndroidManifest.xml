@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".VideoList"></activity>
+        <activity android:name=".UI.student"></activity>
+        <activity android:name=".BookmarkActivity" />
+        <activity android:name=".VideoList" />
         <activity android:name=".videoplayer" />
         <activity android:name=".ParticularCategoryActivity" />
         <activity android:name=".ResetotpConfirm" />
@@ -23,7 +25,7 @@
         <activity android:name=".UI.otp" />
         <activity android:name=".UI.loginActivity" />
         <activity android:name=".resetPassword" />
-        <activity android:name=".UI.student">
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

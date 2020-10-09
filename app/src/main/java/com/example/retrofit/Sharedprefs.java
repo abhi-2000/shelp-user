@@ -75,10 +75,14 @@ public class Sharedprefs {
         SharedPreferences.Editor prefedit_token= prefs_token.edit();
         prefedit_token.putString("Token", token);
         prefedit_token.commit();
-        SharedPreferences prefs_userid= ctx.getSharedPreferences("userId",0);
-        SharedPreferences.Editor prefsedit_userid= prefs_userid.edit();
-        prefedit.putString("userId", userId);
-        prefsedit_userid.commit();
+        SharedPreferences prefs_userID= ctx.getSharedPreferences("userId",0);
+        SharedPreferences.Editor prefsedit_userID= prefs_userID.edit();
+        prefsedit_userID.putString("userId", userId);
+        prefsedit_userID.commit();
+//        SharedPreferences prefs_email= ctx.getSharedPreferences("email",0);
+//        SharedPreferences.Editor prefsedit_email= prefs_email.edit();
+//        prefsedit_email.putString("email", email);
+//        prefsedit_email.commit();
 
     }
 

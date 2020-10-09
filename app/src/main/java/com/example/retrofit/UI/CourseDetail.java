@@ -1,12 +1,15 @@
 package com.example.retrofit.UI;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,12 +18,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.retrofit.Adapter.SecondAdapter;
+import com.example.retrofit.Bookmark;
+import com.example.retrofit.BookmarkActivity;
+import com.example.retrofit.ModelClass.SecondModelClass;
 import com.example.retrofit.R;
 import com.example.retrofit.VideoList;
 import com.example.retrofit.apipackage.api;
@@ -52,12 +60,17 @@ public class CourseDetail extends AppCompatActivity {
     String course_name, course_id;
     ImageView playvideos;
     ImageView topimg, download;
+    String userid;
+    ImageView bookmark, unbookmark;
     //    String[] videourl = {};
     ArrayList<String> videourllist = new ArrayList<String>();
-
+    String head;
     ////////////
-    private static final int MY_PERSMISSIONS_REQUEST = 100;
+//    private static final int MY_PERSMISSIONS_REQUEST = 100;
     private String[] videourl = {};
+    private ProgressDialog progressDialog;
+    private WebView mWebview;
+    private String[] course_iddetail={};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +79,10 @@ public class CourseDetail extends AppCompatActivity {
         course_id = getIntent().getStringExtra("courseID");
 //        course_name = getIntent().getStringExtra("course_name");
         name = findViewById(R.id.textView9);
+        mWebview = findViewById(R.id.webview);
+        download = findViewById(R.id.imageView3Contact);
+        bookmark = findViewById(R.id.bookmark);
+        unbookmark = findViewById(R.id.unbookmark);
         tutor = findViewById(R.id.creator);
         rate = findViewById(R.id.rating);
         topimg = findViewById(R.id.topcourseimg);
@@ -74,16 +91,17 @@ public class CourseDetail extends AppCompatActivity {
         requirement = findViewById(R.id.requiremnets);
         whatlearn = findViewById(R.id.whatyouwilllearn);
         description = findViewById(R.id.description);
+        progressDialog = new ProgressDialog(this);
 //        download = findViewById(R.id.imageView2download);
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("userId", 0);
-        final String userid = preferences.getString("userId", null);
+        userid = preferences.getString("userId", null);
         SharedPreferences preference = getApplicationContext().getSharedPreferences("Token", 0);
-        final String head = "Bearer " + preference.getString("Token", null);
-        if (ContextCompat.checkSelfPermission(CourseDetail.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(CourseDetail.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERSMISSIONS_REQUEST);
-        }
+        head = "Bearer " + preference.getString("Token", null);
+//        if (ContextCompat.checkSelfPermission(CourseDetail.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(CourseDetail.this,
+//                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERSMISSIONS_REQUEST);
+//        }
 //        download.setOnClickListener(new View.OnClickListener() {
 //                                        @Override
 //                                        public void onClick(View v) {
@@ -139,9 +157,76 @@ public class CourseDetail extends AppCompatActivity {
 //            }
 //
 //        });
-//
+
+
+
+
+
+        Call<ResponseBody> call1 = retroclient
+                .getInstance()
+                .getapi()
+                .bookcourse(userid, head);
+        call1.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call1, Response<ResponseBody> response) {
+                if (!response.isSuccessful())
+                    Toast.makeText(getApplicationContext(), response.code(), Toast.LENGTH_LONG).show();
+                else {
+                    try {
+                        String st = response.body().string();
+                        JSONObject obj = new JSONObject(st);
+                        JSONObject obj1 = obj.getJSONObject("course");
+                        JSONArray jsonArray = obj1.getJSONArray("bookmarked");
+//                        nobookmark.setVisibility(View.GONE);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject c = jsonArray.getJSONObject(i);
+                            String imageurl = c.getString("imageurl");
+                            imageurl = "https://shelp-webapp.herokuapp.com/" + imageurl;
+                            JSONObject rate = c.getJSONObject("rating");
+                            float star = (float) rate.getDouble("ratingFinal");
+                            String name = c.getString("name");
+                            String title = c.getString("title");
+                            String id = c.getString("_id");
+//                            course_name = Arrays.copyOf(course_name, course_name.length + 1);
+//                            course_name[course_name.length - 1] = name;
+                            course_iddetail = Arrays.copyOf(course_iddetail, course_iddetail.length + 1);
+                            course_iddetail[course_iddetail.length - 1] = id;
+                        }
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //        //////////////////////////////////////////////////////////////////
         shortdesc = findViewById(R.id.shoetdescription);
+        progressDialog.setMessage("Loading");
+        progressDialog.show();
+
         Call<ResponseBody> call = retroclient
                 .getInstance()
                 .getapi()
@@ -198,6 +283,7 @@ public class CourseDetail extends AppCompatActivity {
                             shortdesc.setText(courseshortdesc);
 
                         }
+                        progressDialog.dismiss();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -227,6 +313,42 @@ public class CourseDetail extends AppCompatActivity {
                 }
             }
         });
+
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<ResponseBody> call = retroclient
+                        .getInstance()
+                        .getapi()
+                        .download(course_id, head);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (!response.isSuccessful()) {
+                            try {
+
+                                Toast.makeText(getApplicationContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            String url="https://shelp-webapp.herokuapp.com/invoice-" +course_id+ ".pdf";
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
+            }
+        });
+
 
     }
 
@@ -258,11 +380,59 @@ public class CourseDetail extends AppCompatActivity {
 //        Intent i = new Intent(this, VideoList.class);
     }
 
+    public void book(View view) {
+        Bookmark mark = new Bookmark(course_id, userid);
+        Call<ResponseBody> call = retroclient.
+                getInstance().
+                getapi()
+                .bookmark(mark, head);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Course bookmarked", Toast.LENGTH_LONG).show();
+                    bookmark.setVisibility(View.GONE);
+                    unbookmark.setVisibility(View.VISIBLE);
+                } else
+                    Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void unbook(View view) {
+        Bookmark mark = new Bookmark(course_id, userid);
+        Call<ResponseBody> call = retroclient.
+                getInstance().
+                getapi()
+                .unbookmark(mark);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Course unbookmarked", Toast.LENGTH_LONG).show();
+                    bookmark.setVisibility(View.VISIBLE);
+                    unbookmark.setVisibility(View.GONE);
+                } else
+                    Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 //    private boolean writeResponseBodyToDisk(ResponseBody body) {
 //        try {
-//            // todo change the file location/name according to your needs
-//            File futureStudioIconFile = new File(getExternalFilesDir(null) + File.separator + "Future Studio Icon.png");
-//
+//            File futureStudioIconFile = new File(getExternalFilesDir(null) + File.separator + "Future Studio Icon.pdf");
 //            InputStream inputStream = null;
 //            OutputStream outputStream = null;
 //
@@ -286,7 +456,6 @@ public class CourseDetail extends AppCompatActivity {
 //
 //                    fileSizeDownloaded += read;
 //
-////                    Log.d(TAG, "file download: " + fileSizeDownloaded + " of " + fileSize);
 //                }
 //
 //                outputStream.flush();

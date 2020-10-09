@@ -20,7 +20,7 @@
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:layout_margin="10dp"
             android:layout_marginTop="15dp"
             android:background="#B5B2B2"
@@ -35,7 +35,6 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="68dp"
             android:fontFamily="@font/averia_gruesa_libre"
-            android:text="alsndljasnd"
             android:textColor="#000"
             android:textSize="27sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,10 +69,11 @@
             android:id="@+id/play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="280dp"
-            android:layout_marginLeft="280dp"
+            android:layout_marginStart="260dp"
+            android:layout_marginLeft="260dp"
             android:layout_marginTop="32dp"
-            android:fontFamily="@font/droid_sans"
+            android:textColor="#000000"
+            android:fontFamily="@font/abeezee"
             android:text="View videos"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -140,11 +140,18 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/abeezee"
-            android:text="Abhishek Sangwan"
             android:textColor="#000"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/createdby" />
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="650dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView3Contact"
@@ -160,14 +167,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
-            android:layout_marginEnd="52dp"
-            android:layout_marginRight="52dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
             android:fontFamily="@font/abeezee"
             android:text="Resources"
             android:textColor="#000"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shoetdescription" />
+
+        <ImageView
+            android:id="@+id/bookmark"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/unbookmark"
+            android:onClick="book"
+            app:layout_constraintBottom_toTopOf="@+id/backbrown"
+            app:layout_constraintEnd_toStartOf="@+id/textView15"
+            app:layout_constraintHorizontal_bias="0.739"
+            app:layout_constraintStart_toEndOf="@+id/creator" />
+
+        <ImageView
+            android:id="@+id/unbookmark"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/bookmark_24"
+            android:onClick="unbook"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/backbrown"
+            app:layout_constraintEnd_toStartOf="@+id/textView15"
+            app:layout_constraintHorizontal_bias="0.739"
+            app:layout_constraintStart_toEndOf="@+id/creator" />
+
 
         <View
             android:id="@+id/backbrown"

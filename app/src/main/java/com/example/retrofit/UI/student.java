@@ -10,14 +10,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.retrofit.Adapter.SecondAdapter;
 import com.example.retrofit.Adapter.firstAdapter;
+import com.example.retrofit.BookmarkActivity;
 import com.example.retrofit.ModelClass.SecondModelClass;
 import com.example.retrofit.ModelClass.firstmodelclass;
 import com.example.retrofit.ParticularCategoryActivity;
@@ -40,9 +44,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static java.security.AccessController.getContext;
+
 public class student extends AppCompatActivity implements firstAdapter.OnItemClickListener, SecondAdapter.OnItemClickListener {
     RecyclerView firstrv, secondrv;
     NavigationView nav;
+    TextView emailtxtview, nametxtview;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
     List<firstmodelclass> modleClassList = new ArrayList<>();
@@ -50,16 +57,26 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
     private String[] course_id = {};
     private String[] course_idtrend = {};
     private String[] course_name = {};
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
         checkuser();
+        nametxtview = findViewById(R.id.namenav);
+        emailtxtview = findViewById(R.id.emailnav);
         firstrv = findViewById(R.id.firstrv);
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("email", 0);
+        final String email = preferences.getString("email", null);
+//        emailtxtview.setText(email);
+        SharedPreferences preferences1 = getApplicationContext().getSharedPreferences("Name", 0);
+        final String name = preferences1.getString("Name", null);
+//        nametxtview.setText(name);
         secondrv = findViewById(R.id.secondrv);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        progressDialog = new ProgressDialog(this);
         nav = (NavigationView) findViewById(R.id.navbar);
         drawerLayout = findViewById(R.id.drawer);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
@@ -69,6 +86,16 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
+                    case R.id.homenav:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.bookmarknav:
+                        Intent intent2 = new Intent(student.this, BookmarkActivity.class);
+                        intent2.putExtra("cat", "Web Designing");
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        startActivity(intent2);
+                        break;
+
                     case R.id.web:
                         Intent intent = new Intent(student.this, ParticularCategoryActivity.class);
                         intent.putExtra("cat", "Web Designing");
@@ -95,6 +122,15 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
 
                     case R.id.photography:
                         break;
+                    case R.id.logout:
+                        Sharedprefs.saveSharedsetting(getApplicationContext(), "Clip", "true");
+                        Sharedprefs.sharedprefsave(getApplicationContext(), "", "", "");
+                        Intent signout = new Intent(getApplicationContext(), loginActivity.class);
+                        finish();
+                        startActivity(signout);
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + menuItem.getItemId());
                 }
                 return true;
             }
@@ -105,7 +141,8 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
 //        adapter.notifyDataSetChanged();
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(student.this, LinearLayoutManager.HORIZONTAL, false);
 //        firstrv.setLayoutManager(linearLayoutManager);
-
+        progressDialog.setMessage("Loading");
+        progressDialog.show();
         Call<ResponseBody> call = retroclient
                 .getInstance()
                 .getapi()
@@ -240,10 +277,10 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
 
     @Override
     public void onItemClicked(int position) {
-            Intent intent = new Intent(this, CourseDetail.class);
-            intent.putExtra("courseID", course_idtrend[position]);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(this, CourseDetail.class);
+        intent.putExtra("courseID", course_idtrend[position]);
+        startActivity(intent);
+    }
 
     public void checkuser() {
         Boolean check = Boolean.valueOf(Sharedprefs.readShared(student.this, "Clip", "true"));

@@ -1,4 +1,5 @@
 package com.example.retrofit.apipackage;
+import com.example.retrofit.Bookmark;
 import com.example.retrofit.Reotp;
 import com.example.retrofit.ResetPass;
 import com.example.retrofit.Response.OtpResponse;
@@ -35,11 +36,10 @@ public interface api {
     @POST("signup/resetpassword")
     Call<ResponseBody> resetpass(@Body ResetPass reset);
 
-
     @GET("home/{cat}")
     Call<ResponseBody> home(@Path("cat")String category);
 
-    @GET("/course/coursename/{courseID}")
+    @GET("course/coursename/{courseID}")
     Call<ResponseBody> detail(@Path("courseID")String id , @Header("Authorization") String header);
 
     @POST("signup/resetOtp")
@@ -48,6 +48,15 @@ public interface api {
     Call<ResponseBody> check(@Body Checkotp check);
 
     @Streaming
-    @GET("/home/download/{userId}")
+    @GET("home/download/{userId}")
     Call<ResponseBody> download(@Path("userId") String userid,@Header("Authorization") String header);
+
+    @POST("home/category/courseTitle")
+    Call<ResponseBody> bookmark(@Body Bookmark book,@Header("Authorization") String header);
+
+    @POST("unbookmark")
+    Call<ResponseBody> unbookmark(@Body Bookmark book);
+    @GET("users/userName/{userId}")
+    Call<ResponseBody> bookcourse(@Path("userId")String id , @Header("Authorization") String header);
+
 }

@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-            <item
-                android:id="@+id/home"
-                android:icon="@drawable/home_24"
-                android:title="Home" />
-            <item
-                android:id="@+id/bookmark"
-                android:icon="@drawable/bookmark_24"
-                android:title="Bookmarks" />
-
+    <item
+        android:id="@+id/homenav"
+        android:icon="@drawable/home_24"
+        android:title="Home" />
+    <item
+        android:id="@+id/bookmarknav"
+        android:icon="@drawable/bookmark_24"
+        android:title="Bookmarks" />
 
 
     <item android:title="Category">
         <menu>
             <item
                 android:id="@+id/web"
-                android:title="Web Designing" />
+                android:title="Web Development" />
             <item
                 android:id="@+id/ml"
                 android:title="Machine Learning" />
@@ -30,7 +29,7 @@
                 android:title="React" />
             <item
                 android:id="@+id/node"
-                android:title="Node" />
+                android:title="NodeJS" />
         </menu>
     </item>
     <item
@@ -41,8 +40,15 @@
             <item
                 android:id="@+id/help"
                 android:title="Help" />
+            <!--            <item-->
+            <!--                android:title=""/>-->
+
         </menu>
     </item>
+    <item android:title="" />
 
-
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/logout"
+        android:title="Logout" />
 </menu>
