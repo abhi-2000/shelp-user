@@ -73,11 +73,11 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
 //        checkuser();
         nametxtview = findViewById(R.id.namenav);
         firstrv = findViewById(R.id.firstrv);
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("email", 0);
-        final String email = preferences.getString("email", null);
+//        SharedPreferences preferences = getApplicationContext().getSharedPreferences("email", 0);
+//        final String email = preferences.getString("email", null);
 //        emailtxtview.setText(email);
-        SharedPreferences preferences1 = getApplicationContext().getSharedPreferences("Name", 0);
-        final String name = preferences1.getString("Name", null);
+//        SharedPreferences preferences1 = getApplicationContext().getSharedPreferences("Name", 0);
+//        final String name = preferences1.getString("Name", null);
 //        nametxtview.setText(name);
         secondrv = findViewById(R.id.secondrv);
         Toolbar toolbar = findViewById(R.id.toolbar);

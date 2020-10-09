@@ -59,11 +59,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Oops! No Courses Found"
+            android:textColor="#000"
+            android:fontFamily="@font/abeezee"
+            android:id="@+id/nocourses"
+            android:visibility="gone"
+            android:textSize="45sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16" />
     </androidx.constraintlayout.widget.ConstraintLayout>

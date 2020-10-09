@@ -47,7 +47,7 @@ public class ParticularCategoryActivity extends AppCompatActivity implements OnI
     List<firstmodelclass> modleClassList = new ArrayList<>();
     RecyclerView rcv;
     private List<SecondModelClass> secondModelClassList = new ArrayList<>();
-    TextView catname;
+    TextView catname,nocouses;
     String str;
     ProgressDialog progressDialog;
 
@@ -57,6 +57,7 @@ public class ParticularCategoryActivity extends AppCompatActivity implements OnI
         setContentView(R.layout.activity_particular_course);
         rcv = findViewById(R.id.recyclerview);
         catname=findViewById(R.id.catname);
+        nocouses=findViewById(R.id.nocourses);
         str = getIntent().getStringExtra("cat");
         catname.setText(str);
         progressDialog = new ProgressDialog(this);
@@ -97,8 +98,10 @@ public class ParticularCategoryActivity extends AppCompatActivity implements OnI
                         String str = response.body().string();
                         JSONObject object = new JSONObject(str);
                         JSONArray jsonArray = object.getJSONArray("course");
+                        nocouses.setVisibility(View.VISIBLE);
                         for (int i = 0; i < jsonArray.length(); i++) {
-
+                            nocouses.setVisibility(View.GONE);
+                            rcv.setVisibility(View.VISIBLE);
                             JSONObject c = jsonArray.getJSONObject(i);
 //                            String imageurl = "http://localhost:8080/Sat%20Oct%2003%202020-React.jpg";
 //                            String image = c.getString("imageurl");
