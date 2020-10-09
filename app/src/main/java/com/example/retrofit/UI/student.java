@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -28,6 +32,9 @@ import com.example.retrofit.ParticularCategoryActivity;
 import com.example.retrofit.R;
 import com.example.retrofit.Sharedprefs;
 import com.example.retrofit.apipackage.retroclient;
+import com.gdacciaro.iOSDialog.iOSDialog;
+import com.gdacciaro.iOSDialog.iOSDialogBuilder;
+import com.gdacciaro.iOSDialog.iOSDialogClickListener;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -63,9 +70,8 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
-        checkuser();
+//        checkuser();
         nametxtview = findViewById(R.id.namenav);
-        emailtxtview = findViewById(R.id.emailnav);
         firstrv = findViewById(R.id.firstrv);
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("email", 0);
         final String email = preferences.getString("email", null);
@@ -91,36 +97,54 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                         break;
                     case R.id.bookmarknav:
                         Intent intent2 = new Intent(student.this, BookmarkActivity.class);
-                        intent2.putExtra("cat", "Web Designing");
                         drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent2);
                         break;
 
                     case R.id.web:
                         Intent intent = new Intent(student.this, ParticularCategoryActivity.class);
-                        intent.putExtra("cat", "Web Designing");
+                        intent.putExtra("cat", "Web Development");
                         drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent);
                         break;
 
                     case R.id.ml:
                         Intent intent1 = new Intent(student.this, ParticularCategoryActivity.class);
-                        intent1.putExtra("cat", "ML");
+                        intent1.putExtra("cat", "Machine Learning");
                         drawerLayout.closeDrawer(GravityCompat.START);
                         startActivity(intent1);
                         break;
 
 
                     case R.id.graphic:
+                        Intent intent3 = new Intent(student.this, ParticularCategoryActivity.class);
+                        intent3.putExtra("cat", "Designing");
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        startActivity(intent3);
                         break;
 
                     case R.id.react:
+                        Intent intent4 = new Intent(student.this, ParticularCategoryActivity.class);
+                        intent4.putExtra("cat", "React");
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        startActivity(intent4);
+
                         break;
                     case R.id.node:
+                        Intent intent5 = new Intent(student.this, ParticularCategoryActivity.class);
+                        intent5.putExtra("cat", "Nodejs");
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        startActivity(intent5);
+
                         break;
 
 
                     case R.id.photography:
+                        Intent intent6 = new Intent(student.this, ParticularCategoryActivity.class);
+                        intent6.putExtra("cat", "Photography");
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        startActivity(intent6);
+
                         break;
                     case R.id.logout:
                         Sharedprefs.saveSharedsetting(getApplicationContext(), "Clip", "true");
@@ -143,6 +167,52 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
 //        firstrv.setLayoutManager(linearLayoutManager);
         progressDialog.setMessage("Loading");
         progressDialog.show();
+        CheckInternet();
+
+    }
+
+    private void CheckInternet() {
+        ConnectivityManager manager = (ConnectivityManager)
+                getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if (null != activeNetwork) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE || activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                retrowork();
+            }
+        } else {
+
+            dialogboxfun();
+
+        }
+    }
+
+    private void dialogboxfun() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(student.this);
+        builder1.setMessage("No internet Connection");
+        builder1.setCancelable(false);
+        builder1.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        CheckInternet();
+                    }
+                });
+        builder1.setNegativeButton(
+                "Quit",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
+    }
+
+    private void retrowork() {
         Call<ResponseBody> call = retroclient
                 .getInstance()
                 .getapi()
@@ -185,6 +255,7 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                             adapter.setOnItemClickListener(student.this);
                             adapter.notifyDataSetChanged();
                         }
+                        progressDialog.dismiss();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -203,6 +274,7 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
 
 
     }
+
 
     private void trendingrv() {
         Call<ResponseBody> call1 = retroclient
@@ -282,15 +354,49 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
         startActivity(intent);
     }
 
-    public void checkuser() {
-        Boolean check = Boolean.valueOf(Sharedprefs.readShared(student.this, "Clip", "true"));
-
-        Intent intro = new Intent(student.this, SignupActivity.class);
-        intro.putExtra("Clip", check);
-
-        if (check) {
-            finish();
-            startActivity(intro);
-        }
+    @Override
+    public void onBackPressed() {
+        ShowDiag();
     }
+
+    private void ShowDiag() {
+//        Typeface font = Typeface.createFromAsset(getApplicationContext().getAssets(), "Gilroy-ExtraBold.ttf");
+        new iOSDialogBuilder(this)
+                .setTitle("Exit")
+                .setSubtitle("Ohh no! You're leaving...\nAre you sure?")
+                .setCancelable(false)
+                .setPositiveListener(getString(R.string.ok), new iOSDialogClickListener() {
+                    @Override
+                    public void onClick(iOSDialog dialog) {
+                        dialog.dismiss();
+                        CloseApp();
+                    }
+                })
+                .setNegativeListener(getString(R.string.dismiss), new iOSDialogClickListener() {
+                    @Override
+                    public void onClick(iOSDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .build().show();
+    }
+
+    private void CloseApp() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(intent);
+        int pid = android.os.Process.myPid();
+        android.os.Process.killProcess(pid);
+    }
+//    public void checkuser() {
+//        Boolean check = Boolean.valueOf(Sharedprefs.readShared(student.this, "Clip", "true"));
+//
+//        Intent intro = new Intent(student.this, SignupActivity.class);
+//        intro.putExtra("Clip", check);
+//
+//        if (check) {
+//            finish();
+//            startActivity(intro);
+//        }
+//    }
 }

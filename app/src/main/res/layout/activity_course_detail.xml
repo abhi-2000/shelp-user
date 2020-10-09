@@ -11,6 +11,19 @@
         tools:context=".UI.CourseDetail">
 
         <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/arrow_back_24"
+            android:elevation="1dp"
+            android:onClick="secBackOne"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
             android:id="@+id/topcourseimg"
             android:layout_width="match_parent"
             android:layout_height="220dp"
@@ -58,6 +71,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="192dp"
             android:numStars="5"
+            android:isIndicator="true"
             android:scaleX="0.35"
             android:scaleY="0.35"
             android:stepSize="0.1"
@@ -72,9 +86,9 @@
             android:layout_marginStart="260dp"
             android:layout_marginLeft="260dp"
             android:layout_marginTop="32dp"
-            android:textColor="#000000"
             android:fontFamily="@font/abeezee"
             android:text="View videos"
+            android:textColor="#000000"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/topcourseimg" />
@@ -174,9 +188,9 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginBottom="36dp"
-            android:visibility="gone"
             android:background="@drawable/unbookmark"
             android:onClick="book"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/backbrown"
             app:layout_constraintEnd_toStartOf="@+id/textView15"
             app:layout_constraintHorizontal_bias="0.739"

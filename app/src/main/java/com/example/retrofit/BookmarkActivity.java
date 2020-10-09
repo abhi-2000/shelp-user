@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +25,7 @@ import com.example.retrofit.ModelClass.firstmodelclass;
 import com.example.retrofit.UI.CourseDetail;
 import com.example.retrofit.UI.student;
 import com.example.retrofit.apipackage.retroclient;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +49,7 @@ public class BookmarkActivity extends AppCompatActivity implements SecondAdapter
     private RecyclerView bookrv;
     LinearLayout layoutlinear;
     ImageView nobookmark;
+    String userID,head;
     ProgressDialog pd;
 
     @Override
@@ -50,15 +57,43 @@ public class BookmarkActivity extends AppCompatActivity implements SecondAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmark);
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("userId", 0);
-        String userID = preferences.getString("userId", null);
+        userID = preferences.getString("userId", null);
         SharedPreferences preference = getApplicationContext().getSharedPreferences("Token", 0);
-        String head = "Bearer " + preference.getString("Token", null);
+         head = "Bearer " + preference.getString("Token", null);
         bookrv = findViewById(R.id.rcvbookmark);
         layoutlinear=findViewById(R.id.layoutlinear);
         nobookmark=findViewById(R.id.nobookmark);
         pd = new ProgressDialog(this);
         pd.setMessage("Loading");
         pd.show();
+        CheckInternet();
+
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+        Intent intent = new Intent(this, CourseDetail.class);
+        intent.putExtra("courseID", course_idbook[position]);
+        startActivity(intent);
+
+    }
+    private void CheckInternet() {
+        ConnectivityManager manager = (ConnectivityManager)
+                getApplicationContext() .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if(null!=activeNetwork){
+            if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE || activeNetwork.getType()==ConnectivityManager.TYPE_WIFI){
+               bookmarkfunc();
+            }
+        }
+        else{
+            dialogboxfun();
+
+        }
+    }
+
+    private void bookmarkfunc() {
         Call<ResponseBody> call = retroclient
                 .getInstance()
                 .getapi()
@@ -113,16 +148,37 @@ public class BookmarkActivity extends AppCompatActivity implements SecondAdapter
         });
     }
 
-    @Override
-    public void onItemClicked(int position) {
-        Intent intent = new Intent(this, CourseDetail.class);
-        intent.putExtra("courseID", course_idbook[position]);
-        startActivity(intent);
+    private void dialogboxfun() {
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(BookmarkActivity.this);
+        builder2.setMessage("No internet Connection");
+        builder2.setCancelable(false);
+        builder2.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        CheckInternet();
+                    }
+                });
+        builder2.setNegativeButton(
+                "Quit",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+
+                    }
+                });
+        AlertDialog alert12 = builder2.create();
+        alert12.show();
 
     }
+
 
     public void gohome(View view) {
         finish();
 
+    }
+
+    public void backhome(View view) {
+        finish();
     }
 }

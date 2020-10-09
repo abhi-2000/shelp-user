@@ -2,13 +2,20 @@ package com.example.retrofit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.MediaController;
 import android.widget.VideoView;
+
+import com.example.retrofit.UI.student;
 
 import java.util.ArrayList;
 
@@ -17,42 +24,38 @@ public class videoplayer extends AppCompatActivity {
     int i = 0;
     ArrayList<String> videolist = new ArrayList<String>();
     ProgressDialog pd;
+    VideoView videoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_videoplayer);
-        final VideoView videoView = findViewById(R.id.video_view);
+        videoView = findViewById(R.id.video_view);
 //            String url = "http://192.168.43.162:8080/Fri%20Oct%2002%202020-Fri%20Oct%2002%202020-Fri%20Oct%2002%202020-Thu%20Oct%2001%202020-Wed%20Sep%2030%202020-sampleVideo.mp4";
         String url = getIntent().getStringExtra("videourl");
         videolist = getIntent().getStringArrayListExtra("videourllist");
-//         url="https://shelp-webapp.herokuapp.com/"+url;
-//        final ArrayList<String> url = getIntent().getStringArrayListExtra("videourl");
-//        final String[] url = getIntent().getStringArrayExtra("videourl");
-//        url="http://192.168.43.162:8080/"+url;
-//        for (int j = 0; j < url.length; j++) {
-//            String url1 = "http://192.168.43.162:8080/Fri%20Oct%2002%202020-Fri%20Oct%2002%202020-Fri%20Oct%2002%202020-Thu%20Oct%2001%202020-Wed%20Sep%2030%202020-sampleVideo.mp4";
-//        }
-//        while (i < url.size()) {
-//            url1 = url.get(i);
-//            Uri uri = Uri.parse(url1);
-//            videoView.setVideoURI(uri);
-//            MediaController mediaController = new MediaController(this);
-//            videoView.setMediaController(mediaController);
-//            mediaController.setAnchorView(videoView);
-//            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                @Override
-//                public void onCompletion(MediaPlayer mp) {
-////                    String url2 = "http://192.168.43.162:8080/Dubstep%20Bird%20(Original%205%20Sec%20Video).mp4";
-//                    String url2= url.get(i++);
-//                    Uri uri = Uri.parse(url2);
-//                    videoView.setVideoURI(uri);
-//                }
-//            });
-//        }
         pd=new ProgressDialog(this);
         pd.setMessage("Please Wait..");
         pd.show();
+        CheckInternet();
+    }
+    private void CheckInternet() {
+        ConnectivityManager manager = (ConnectivityManager)
+                getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if (null != activeNetwork) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE || activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                retrowork();
+            }
+        } else {
+
+            dialogboxfun();
+
+        }
+    }
+
+    private void retrowork() {
         Uri uri = Uri.parse(videolist.get(0));
         videoView.start();
         videoView.setVideoURI(uri);
@@ -84,5 +87,32 @@ public class videoplayer extends AppCompatActivity {
                 return false;
             }
         });
+
     }
+
+    private void dialogboxfun() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(videoplayer.this);
+        builder1.setMessage("No internet Connection");
+        builder1.setCancelable(false);
+        builder1.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        CheckInternet();
+                    }
+                });
+        builder1.setNegativeButton(
+                "Quit",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
+    }
+
 }

@@ -11,22 +11,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/arrow_back_24"
+            android:elevation="1dp"
+            android:onClick="backhome"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <TextView
             android:id="@+id/booktxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="25dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/abeezee"
             android:text="My Bookmarks"
             android:textColor="#566775"
             android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:id="@+id/layoutlinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/layoutlinear"
             android:layout_marginTop="148dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,26 +55,28 @@
                 android:layout_height="180dp"
                 android:layout_gravity="center"
                 android:background="@drawable/nobookmark" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="50dp"
                 android:fontFamily="@font/droid_sans"
-                android:textSize="30sp"
-                android:text="Nothing is Bookmarked"/>
+                android:text="Nothing is Bookmarked"
+                android:textSize="30sp" />
+
             <Button
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg"
-                android:text="Go Home"
-                android:textSize="20sp"
-                android:textAllCaps="false"
-                android:onClick="gohome"
-                android:fontFamily="@font/abeezee"
-                android:textColor="#FFF"
                 android:layout_gravity="center"
-                android:layout_marginTop="40dp"/>
+                android:layout_marginTop="40dp"
+                android:background="@drawable/bg"
+                android:fontFamily="@font/abeezee"
+                android:onClick="gohome"
+                android:text="Go Home"
+                android:textAllCaps="false"
+                android:textColor="#FFF"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

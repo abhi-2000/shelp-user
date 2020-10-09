@@ -3,6 +3,8 @@
     package="com.example.retrofit">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -12,20 +14,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".UI.student"></activity>
-        <activity android:name=".BookmarkActivity" />
-        <activity android:name=".VideoList" />
-        <activity android:name=".videoplayer" />
-        <activity android:name=".ParticularCategoryActivity" />
-        <activity android:name=".ResetotpConfirm" />
-        <activity android:name=".resetotp" />
-        <activity android:name=".UI.CourseDetail" />
-        <activity android:name=".UI.MainActivity" />
-        <activity android:name=".UI.SignupActivity" />
-        <activity android:name=".UI.otp" />
-        <activity android:name=".UI.loginActivity" />
-        <activity android:name=".resetPassword" />
-        <activity android:name=".Splash">
+        <activity android:name=".UI.student"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".BookmarkActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".VideoList"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".videoplayer"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".ParticularCategoryActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".ResetotpConfirm"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".resetotp"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".UI.CourseDetail"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".UI.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".UI.SignupActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".UI.otp"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".UI.loginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".resetPassword"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".Splash"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

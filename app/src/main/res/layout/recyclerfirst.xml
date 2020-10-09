@@ -68,7 +68,6 @@
                 android:clickable="false"
                 android:scaleX="0.35"
                 android:isIndicator="true"
-                android:focusableInTouchMode="false"
                 android:scaleY="0.35"
                 android:theme="@style/RatingBar"
                 android:numStars="5"

@@ -4,9 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +48,7 @@ public class ParticularCategoryActivity extends AppCompatActivity implements OnI
     RecyclerView rcv;
     private List<SecondModelClass> secondModelClassList = new ArrayList<>();
     TextView catname;
+    String str;
     ProgressDialog progressDialog;
 
     @Override
@@ -50,11 +57,31 @@ public class ParticularCategoryActivity extends AppCompatActivity implements OnI
         setContentView(R.layout.activity_particular_course);
         rcv = findViewById(R.id.recyclerview);
         catname=findViewById(R.id.catname);
-        String str = getIntent().getStringExtra("cat");
+        str = getIntent().getStringExtra("cat");
         catname.setText(str);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading");
         progressDialog.show();
+        CheckInternet();
+
+    }
+    private void CheckInternet() {
+        ConnectivityManager manager = (ConnectivityManager)
+                getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if (null != activeNetwork) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE || activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                retrowork();
+            }
+        } else {
+
+            dialogboxfun();
+
+        }
+    }
+
+    private void retrowork() {
         Call<ResponseBody> call1 = retroclient
                 .getInstance()
                 .getapi()
@@ -113,10 +140,39 @@ public class ParticularCategoryActivity extends AppCompatActivity implements OnI
 
     }
 
+    private void dialogboxfun() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(ParticularCategoryActivity.this);
+        builder1.setMessage("No internet Connection");
+        builder1.setCancelable(false);
+        builder1.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        CheckInternet();
+                    }
+                });
+        builder1.setNegativeButton(
+                "Quit",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
+    }
+
     @Override
     public void onItemClicked(int position) {
         Intent intent=new Intent(this, CourseDetail.class);
         intent.putExtra("courseID",course_id[position]);
         startActivity(intent);
+    }
+
+    public void back(View view) {
+        finish();
     }
 }
