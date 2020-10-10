@@ -62,10 +62,8 @@ public class ResetotpConfirm extends AppCompatActivity {
                     try {
                         assert response.errorBody() != null;
                         String string = response.errorBody().string();
-                        JSONObject jsonObject1 = new JSONObject(string);
-                        String wrong = jsonObject1.getString("message");
-                        Toast.makeText(getApplicationContext(), wrong, Toast.LENGTH_LONG).show();
-                    } catch (JSONException | IOException e) {
+                        Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
@@ -73,7 +71,7 @@ public class ResetotpConfirm extends AppCompatActivity {
                         assert response.body() != null;
                         String str = response.body().string();
                         Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG).show();
-                        if (str.equalsIgnoreCase("\"Otp verified\"")) {
+                        if (str.equalsIgnoreCase("\"Otp correct\"")) {
                             Intent intent = new Intent(ResetotpConfirm.this, resetPassword.class);
                             intent.putExtra("email", email);
                             finish();
@@ -94,4 +92,6 @@ public class ResetotpConfirm extends AppCompatActivity {
         });
     }
 
+    public void restpass(View view) {
+    }
 }

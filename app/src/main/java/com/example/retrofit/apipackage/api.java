@@ -30,7 +30,7 @@ public interface api {
     @PUT("signup")
     Call<SignupResponse> createuser(@Body signup create);
 
-    @POST("signup/resetpassword")
+    @POST("signup/reset-password")
     Call<ResponseBody> resetpass(@Body ResetPass reset);
 
     @GET("home/{cat}")

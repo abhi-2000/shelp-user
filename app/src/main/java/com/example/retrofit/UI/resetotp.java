@@ -109,4 +109,9 @@ public class resetotp extends AppCompatActivity {
         });
     }
 
+    public void loginsend(View view) {
+        Intent i=new Intent(this,loginActivity.class);
+        finish();
+        startActivity(i);
+    }
 }
