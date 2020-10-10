@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.retrofit.R;
-import com.example.retrofit.apipackage.course;
+import com.example.retrofit.ModelClass.course;
 import com.example.retrofit.apipackage.retroclient;
 
 import org.json.JSONException;

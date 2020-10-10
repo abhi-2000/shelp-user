@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 import com.example.retrofit.R;
 import com.example.retrofit.Response.SignupResponse;
 import com.example.retrofit.apipackage.retroclient;
-import com.example.retrofit.signup;
+import com.example.retrofit.ModelClass.signup;
 
 import org.json.JSONArray;
 import org.json.JSONException;

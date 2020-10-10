@@ -1,13 +1,15 @@
 package com.example.retrofit.apipackage;
+import com.example.retrofit.ModelClass.Checkotp;
 import com.example.retrofit.ModelClass.Ratecourse;
+import com.example.retrofit.ModelClass.course;
 import com.example.retrofit.Response.Bookmark;
 import com.example.retrofit.ModelClass.Reotp;
-import com.example.retrofit.ResetPass;
+import com.example.retrofit.ModelClass.ResetPass;
 import com.example.retrofit.Response.OtpResponse;
 import com.example.retrofit.Response.ResendResponse;
 import com.example.retrofit.Response.SignupResponse;
-import com.example.retrofit.Verify;
-import com.example.retrofit.signup;
+import com.example.retrofit.ModelClass.Verify;
+import com.example.retrofit.ModelClass.signup;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

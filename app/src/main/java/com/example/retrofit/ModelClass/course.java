@@ -1,4 +1,4 @@
-package com.example.retrofit.apipackage;
+package com.example.retrofit.ModelClass;
 
 public class course {
 

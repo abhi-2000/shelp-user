@@ -1,11 +1,11 @@
-package com.example.retrofit;
+package com.example.retrofit.ModelClass;
 
-public class Verify {
-    String token, Otp;
+public class Checkotp {
+    String token,otp;
 
-    public Verify(String token, String otp) {
+    public Checkotp(String token, String otp) {
         this.token = token;
-        Otp = otp;
+        this.otp = otp;
     }
 
     public String getToken() {
@@ -17,10 +17,10 @@ public class Verify {
     }
 
     public String getOtp() {
-        return Otp;
+        return otp;
     }
 
     public void setOtp(String otp) {
-        Otp = otp;
+        this.otp = otp;
     }
 }

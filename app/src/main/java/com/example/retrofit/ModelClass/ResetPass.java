@@ -1,4 +1,4 @@
-package com.example.retrofit;
+package com.example.retrofit.ModelClass;
 
 public class ResetPass {
     String email,newPassword,confirmPassword;

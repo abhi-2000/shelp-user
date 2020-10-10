@@ -18,8 +18,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".UI.BookmarkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".VideoList"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".UI.videoplayer"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".UI.ParticularCategoryActivity"
@@ -30,15 +28,13 @@
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".UI.CourseDetail"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".UI.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".UI.SignupActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".UI.otp"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".UI.loginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".resetPassword"
+        <activity android:name=".UI.resetPassword"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".UI.Splash"
             android:configChanges="orientation|keyboardHidden|screenSize">

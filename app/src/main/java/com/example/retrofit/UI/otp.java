@@ -14,7 +14,7 @@ import com.example.retrofit.ModelClass.Reotp;
 import com.example.retrofit.Response.OtpResponse;
 import com.example.retrofit.Response.ResendResponse;
 import com.example.retrofit.Sharedprefs;
-import com.example.retrofit.Verify;
+import com.example.retrofit.ModelClass.Verify;
 import com.example.retrofit.apipackage.retroclient;
 
 import org.json.JSONException;

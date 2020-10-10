@@ -9,12 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.retrofit.R;
-import com.example.retrofit.apipackage.Checkotp;
+import com.example.retrofit.ModelClass.Checkotp;
 import com.example.retrofit.apipackage.retroclient;
-import com.example.retrofit.resetPassword;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 

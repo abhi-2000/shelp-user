@@ -1,4 +1,4 @@
-package com.example.retrofit;
+package com.example.retrofit.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.retrofit.UI.SignupActivity;
-import com.example.retrofit.UI.student;
+import com.example.retrofit.R;
+import com.example.retrofit.ModelClass.ResetPass;
 import com.example.retrofit.apipackage.retroclient;
 
 import org.json.JSONException;
