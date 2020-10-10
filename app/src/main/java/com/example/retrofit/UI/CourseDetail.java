@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.retrofit.ModelClass.Ratecourse;
 import com.example.retrofit.Response.Bookmark;
 import com.example.retrofit.R;
 import com.example.retrofit.apipackage.retroclient;
@@ -49,10 +51,13 @@ public class CourseDetail extends AppCompatActivity {
     ImageView bookmark, unbookmark;
     ArrayList<String> videourllist = new ArrayList<String>();
     String head;
+    Button submitRate;
+    String rating="0";
+    RatingBar ratecourse;
+
     private String[] videourl = {};
     private ProgressDialog progressDialog;
     private Dialog rankDialog;
-    private RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,8 @@ public class CourseDetail extends AppCompatActivity {
         unbookmark = findViewById(R.id.unbookmark);
         tutor = findViewById(R.id.creator);
         rate = findViewById(R.id.rating);
+        ratecourse = findViewById(R.id.courserate);
+        submitRate = findViewById(R.id.submit_rate);
         topimg = findViewById(R.id.topcourseimg);
         starbar = findViewById(R.id.ratingBar);
         playvideos = findViewById(R.id.playvideos);
@@ -75,6 +82,9 @@ public class CourseDetail extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         unbookmark.setVisibility(View.GONE);
         bookmark.setVisibility(View.GONE);
+        String f=PreferenceManager.getDefaultSharedPreferences(CourseDetail.this).getString("MYLABEL", "0");
+        ratecourse.setRating(Float.parseFloat(f));
+
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("userId", 0);
         userid = preferences.getString("userId", null);
         SharedPreferences preference = getApplicationContext().getSharedPreferences("Token", 0);
@@ -83,7 +93,48 @@ public class CourseDetail extends AppCompatActivity {
         progressDialog.setMessage("Loading");
         progressDialog.show();
         CheckInternet();
+        submitRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rating = String.valueOf(ratecourse.getRating());
+                if ((PreferenceManager.getDefaultSharedPreferences(CourseDetail.this).getString("MYLABEL", "0")) == "0") {
+//                    float f = ratecourse.getRating();
+                    PreferenceManager.getDefaultSharedPreferences(CourseDetail.this).edit().putString("MYLABEL", rating).apply();
+                    ratecourse.setRating(Float.parseFloat(rating));
+                }
+                else{
+                    PreferenceManager.getDefaultSharedPreferences(CourseDetail.this).edit().putString("MYLABEL", rating).apply();
 
+                }
+                Ratecourse rate = new Ratecourse(rating, course_id);
+                Call<ResponseBody> callrate = retroclient
+                        .getInstance()
+                        .getapi()
+                        .ratecourse(rate);
+                callrate.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (!response.isSuccessful())
+                            Toast.makeText(getApplicationContext(), response.code(), Toast.LENGTH_LONG).show();
+                        else {
+                            try {
+                                String st = response.body().string();
+                                JSONObject obj = new JSONObject(st);
+                                String ratedone = obj.getString("message");
+                                Toast.makeText(getApplicationContext(), ratedone, Toast.LENGTH_LONG).show();
+                            } catch (IOException | JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
         playvideos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,48 +216,50 @@ public class CourseDetail extends AppCompatActivity {
                 if (!response.isSuccessful())
                     Toast.makeText(getApplicationContext(), response.code(), Toast.LENGTH_LONG).show();
                 else {
-                    try {
-                        String st = response.body().string();
-                        JSONObject obj = new JSONObject(st);
-                        JSONObject obj1 = obj.getJSONObject("course");
-                        JSONArray jsonArray = obj1.getJSONArray("bookmarked");
-                        if (jsonArray.length() == 0)
-                            bookmark.setVisibility(View.VISIBLE);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject c = jsonArray.getJSONObject(i);
-                            String id = c.getString("_id");
-
-                            if (course_id.equals(id)) {
-                                unbookmark.setVisibility(View.VISIBLE);
-                                bookmark.setVisibility(View.GONE);
-                                break;
-
-                            } else {
-                                unbookmark.setVisibility(View.GONE);
+                        try {
+                            String st = response.body().string();
+                            JSONObject obj = new JSONObject(st);
+                            JSONObject obj1 = obj.getJSONObject("course");
+                            JSONArray jsonArray = obj1.getJSONArray("bookmarked");
+                            if (jsonArray.length() == 0)
                                 bookmark.setVisibility(View.VISIBLE);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject c = jsonArray.getJSONObject(i);
+                                String id = c.getString("_id");
+
+                                if (course_id.equals(id)) {
+                                    unbookmark.setVisibility(View.VISIBLE);
+                                    bookmark.setVisibility(View.GONE);
+                                    break;
+
+                                } else {
+                                    unbookmark.setVisibility(View.GONE);
+                                    bookmark.setVisibility(View.VISIBLE);
+                                }
                             }
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
+                @Override
+                public void onFailure (Call < ResponseBody > call, Throwable t){
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
 
 
-        Call<ResponseBody> call = retroclient
-                .getInstance()
-                .getapi()
-                .detail(course_id, head);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            Call<ResponseBody> call = retroclient
+                    .getInstance()
+                    .getapi()
+                    .detail(course_id, head);
+        call.enqueue(new Callback<ResponseBody>()
+
+            {
+                @Override
+                public void onResponse
+                (Call < ResponseBody > call, Response < ResponseBody > response){
                 if (!response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
                 } else {
@@ -222,8 +275,8 @@ public class CourseDetail extends AppCompatActivity {
                             if (video.length() != 0) {
 
                                 for (int j = 0; j < video.length(); j++) {
-                                    JSONObject ob=video.getJSONObject(j);
-                                    String url=ob.getString("videoUrl");
+                                    JSONObject ob = video.getJSONObject(j);
+                                    String url = ob.getString("videoUrl");
                                     videourl = Arrays.copyOf(videourl, videourl.length + 1);
                                     videourl[videourl.length - 1] = "https://shelp-webapp.herokuapp.com/" + url;
 //                                videourllist.add(video.getString(j));
@@ -269,92 +322,100 @@ public class CourseDetail extends AppCompatActivity {
                 progressDialog.dismiss();
             }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                @Override
+                public void onFailure (Call < ResponseBody > call, Throwable t){
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
 
             }
-        });
+            });
 
+        }
+
+        private void dialogboxfun () {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(CourseDetail.this);
+            builder1.setMessage("No internet Connection");
+            builder1.setCancelable(false);
+            builder1.setPositiveButton(
+                    "Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            CheckInternet();
+                        }
+                    });
+            builder1.setNegativeButton(
+                    "Quit",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+
+        }
+
+        public void book (View view){
+            Bookmark mark = new Bookmark(course_id, userid);
+            Call<ResponseBody> call = retroclient.
+                    getInstance().
+                    getapi()
+                    .bookmark(mark, head);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Course bookmarked", Toast.LENGTH_LONG).show();
+                        bookmark.setVisibility(View.GONE);
+                        unbookmark.setVisibility(View.VISIBLE);
+                    } else
+                        Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        public void unbook (View view){
+            Bookmark mark = new Bookmark(course_id, userid);
+            Call<ResponseBody> call = retroclient.
+                    getInstance().
+                    getapi()
+                    .unbookmark(mark);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Course unbookmarked", Toast.LENGTH_LONG).show();
+                        bookmark.setVisibility(View.VISIBLE);
+                        unbookmark.setVisibility(View.GONE);
+                    } else
+                        Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        public void secBackOne (View view){
+            finish();
+        }
+
+        @Override
+        public void onBackPressed () {
+            super.onBackPressed();
+            Intent i = new Intent(this, student.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+        }
     }
-
-    private void dialogboxfun() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(CourseDetail.this);
-        builder1.setMessage("No internet Connection");
-        builder1.setCancelable(false);
-        builder1.setPositiveButton(
-                "Ok",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        CheckInternet();
-                    }
-                });
-        builder1.setNegativeButton(
-                "Quit",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-
-                    }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
-
-    }
-
-    public void book(View view) {
-        Bookmark mark = new Bookmark(course_id, userid);
-        Call<ResponseBody> call = retroclient.
-                getInstance().
-                getapi()
-                .bookmark(mark, head);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Course bookmarked", Toast.LENGTH_LONG).show();
-                    bookmark.setVisibility(View.GONE);
-                    unbookmark.setVisibility(View.VISIBLE);
-                } else
-                    Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public void unbook(View view) {
-        Bookmark mark = new Bookmark(course_id, userid);
-        Call<ResponseBody> call = retroclient.
-                getInstance().
-                getapi()
-                .unbookmark(mark);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Course unbookmarked", Toast.LENGTH_LONG).show();
-                    bookmark.setVisibility(View.VISIBLE);
-                    unbookmark.setVisibility(View.GONE);
-                } else
-                    Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public void secBackOne(View view) {
-        finish();
-    }
-}

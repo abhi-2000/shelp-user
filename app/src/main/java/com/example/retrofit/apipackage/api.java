@@ -1,4 +1,5 @@
 package com.example.retrofit.apipackage;
+import com.example.retrofit.ModelClass.Ratecourse;
 import com.example.retrofit.Response.Bookmark;
 import com.example.retrofit.ModelClass.Reotp;
 import com.example.retrofit.ResetPass;
@@ -57,5 +58,8 @@ public interface api {
     Call<ResponseBody> bookcourse(@Path("userId")String id , @Header("Authorization") String header);
     @GET("users/userName/{userId}")
     Call<ResponseBody> bookcourse1(@Path("userId")String id , @Header("Authorization") String header);
+
+    @PUT("Rating")
+    Call<ResponseBody> ratecourse(@Body Ratecourse ratecourse);
 
 }

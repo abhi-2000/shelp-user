@@ -70,8 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginRight="192dp"
-            android:numStars="5"
             android:isIndicator="true"
+            android:numStars="5"
             android:scaleX="0.25"
             android:scaleY="0.25"
             android:stepSize="0.1"
@@ -294,5 +294,57 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtdesc" />
+
+        <TextView
+            android:id="@+id/txtrate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp"
+            android:fontFamily="@font/droid_sans"
+            android:text="Rate this course"
+            android:textColor="#000"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
+
+        <RatingBar
+            android:id="@+id/courserate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:numStars="5"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:stepSize="1"
+            android:theme="@style/RatingBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtrate" />
+
+        <Button
+            android:id="@+id/submit_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/bg"
+            android:fontFamily="@font/abeezee"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courserate"
+            tools:layout_editor_absoluteY="126dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/submit_rate" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
