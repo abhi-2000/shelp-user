@@ -163,6 +163,21 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                                 })
                                 .build().show();
                         break;
+                        case R.id.help:
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                            AlertDialog.Builder builder10 = new AlertDialog.Builder(student.this);
+                            builder10.setMessage("Will Update It Soon.");
+                            builder10.setCancelable(true);
+                            builder10.setPositiveButton(
+                                    "Ok",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            AlertDialog alert110 = builder10.create();
+                            alert110.show();
+                    break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + menuItem.getItemId());
                 }

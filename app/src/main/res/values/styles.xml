@@ -16,4 +16,7 @@
         <item name="colorControlNormal">#979797</item>
         <item name="colorControlActivated">#F89D28</item>
     </style>
+    <style name="FullHeightDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>
