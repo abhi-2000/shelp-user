@@ -17,8 +17,6 @@ import com.example.retrofit.R;
 import com.example.retrofit.Sharedprefs;
 import com.example.retrofit.apipackage.RetrofitClient;
 import com.example.retrofit.ModelClass.login;
-import com.example.retrofit.resetPassword;
-import com.example.retrofit.resetotp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -119,7 +117,6 @@ public class loginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                     String token = response.body().getToken();
-                    Toast.makeText(getApplicationContext(),token,Toast.LENGTH_LONG).show();
                     String userId=response.body().getUserId();
                    // SharedPreferences sharedPreferences = getSharedPreferences("t", MODE_PRIVATE);
                     //SharedPreferences.Editor editor = sharedPreferences.edit();

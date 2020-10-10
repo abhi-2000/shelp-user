@@ -1,4 +1,4 @@
-package com.example.retrofit;
+package com.example.retrofit.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.retrofit.UI.student;
+import com.example.retrofit.R;
 import com.example.retrofit.apipackage.Checkotp;
 import com.example.retrofit.apipackage.retroclient;
+import com.example.retrofit.resetPassword;
 
 import org.json.JSONException;
 import org.json.JSONObject;

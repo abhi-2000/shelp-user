@@ -1,4 +1,4 @@
-package com.example.retrofit;
+package com.example.retrofit.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,14 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.retrofit.Response.OtpResponse;
-import com.example.retrofit.Response.ResetpassotpResponse;
-import com.example.retrofit.UI.loginActivity;
-import com.example.retrofit.UI.otp;
+import com.example.retrofit.R;
 import com.example.retrofit.apipackage.course;
 import com.example.retrofit.apipackage.retroclient;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

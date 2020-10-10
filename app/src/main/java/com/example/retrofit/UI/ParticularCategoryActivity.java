@@ -1,4 +1,4 @@
-package com.example.retrofit;
+package com.example.retrofit.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,17 +13,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.retrofit.Adapter.SecondAdapter;
 import com.example.retrofit.Adapter.SecondAdapter.OnItemClickListener;
-import com.example.retrofit.Adapter.firstAdapter;
 import com.example.retrofit.ModelClass.SecondModelClass;
 import com.example.retrofit.ModelClass.firstmodelclass;
-import com.example.retrofit.UI.CourseDetail;
-import com.example.retrofit.UI.student;
+import com.example.retrofit.R;
 import com.example.retrofit.apipackage.retroclient;
 
 import org.json.JSONArray;

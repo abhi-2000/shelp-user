@@ -13,7 +13,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 import com.example.retrofit.Response.Bookmark;
 import com.example.retrofit.R;
 import com.example.retrofit.apipackage.retroclient;
-import com.example.retrofit.videoplayer;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -257,18 +255,19 @@ public class CourseDetail extends AppCompatActivity {
                             shortdesc.setText(courseshortdesc);
 
                         }
-                        progressDialog.dismiss();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
 
             }
         });

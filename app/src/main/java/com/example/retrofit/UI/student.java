@@ -14,8 +14,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -25,10 +23,8 @@ import android.widget.Toast;
 
 import com.example.retrofit.Adapter.SecondAdapter;
 import com.example.retrofit.Adapter.firstAdapter;
-import com.example.retrofit.BookmarkActivity;
 import com.example.retrofit.ModelClass.SecondModelClass;
 import com.example.retrofit.ModelClass.firstmodelclass;
-import com.example.retrofit.ParticularCategoryActivity;
 import com.example.retrofit.R;
 import com.example.retrofit.Sharedprefs;
 import com.example.retrofit.apipackage.retroclient;
@@ -50,8 +46,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static java.security.AccessController.getContext;
 
 public class student extends AppCompatActivity implements firstAdapter.OnItemClickListener, SecondAdapter.OnItemClickListener {
     RecyclerView firstrv, secondrv;
@@ -147,11 +141,27 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
 
                         break;
                     case R.id.logout:
-                        Sharedprefs.saveSharedsetting(getApplicationContext(), "Clip", "true");
-                        Sharedprefs.sharedprefsave(getApplicationContext(), "", "", "");
-                        Intent signout = new Intent(getApplicationContext(), loginActivity.class);
-                        finish();
-                        startActivity(signout);
+                        new iOSDialogBuilder(student.this)
+                                .setTitle("Logout")
+                                .setSubtitle("Are you sure?")
+                                .setCancelable(false)
+                                .setPositiveListener(getString(R.string.ok), new iOSDialogClickListener() {
+                                    @Override
+                                    public void onClick(iOSDialog dialog) {
+                                        Sharedprefs.saveSharedsetting(getApplicationContext(), "Clip", "true");
+                                        Sharedprefs.sharedprefsave(getApplicationContext(), "", "", "");
+                                        Intent signout = new Intent(getApplicationContext(), loginActivity.class);
+                                        finish();
+                                        startActivity(signout);
+                                    }
+                                })
+                                .setNegativeListener(getString(R.string.dismiss), new iOSDialogClickListener() {
+                                    @Override
+                                    public void onClick(iOSDialog dialog) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .build().show();
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + menuItem.getItemId());
@@ -255,7 +265,6 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                             adapter.setOnItemClickListener(student.this);
                             adapter.notifyDataSetChanged();
                         }
-                        progressDialog.dismiss();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -263,11 +272,14 @@ public class student extends AppCompatActivity implements firstAdapter.OnItemCli
                         e.printStackTrace();
                     }
                 }
+                progressDialog.dismiss();
+
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
 
             }
         });

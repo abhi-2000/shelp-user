@@ -1,6 +1,6 @@
 package com.example.retrofit.apipackage;
 import com.example.retrofit.Response.Bookmark;
-import com.example.retrofit.Reotp;
+import com.example.retrofit.ModelClass.Reotp;
 import com.example.retrofit.ResetPass;
 import com.example.retrofit.Response.OtpResponse;
 import com.example.retrofit.Response.ResendResponse;

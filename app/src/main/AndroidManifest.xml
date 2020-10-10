@@ -16,17 +16,17 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".UI.student"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".BookmarkActivity"
+        <activity android:name=".UI.BookmarkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".VideoList"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".videoplayer"
+        <activity android:name=".UI.videoplayer"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".ParticularCategoryActivity"
+        <activity android:name=".UI.ParticularCategoryActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".ResetotpConfirm"
+        <activity android:name=".UI.ResetotpConfirm"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".resetotp"
+        <activity android:name=".UI.resetotp"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".UI.CourseDetail"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
@@ -40,7 +40,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".resetPassword"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".Splash"
+        <activity android:name=".UI.Splash"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

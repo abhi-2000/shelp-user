@@ -1,4 +1,4 @@
-package com.example.retrofit;
+package com.example.retrofit.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,9 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.retrofit.UI.MainActivity;
-import com.example.retrofit.UI.SignupActivity;
-import com.example.retrofit.UI.student;
+import com.example.retrofit.R;
+import com.example.retrofit.Sharedprefs;
 
 public class Splash extends AppCompatActivity {
 

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.retrofit.R;
-import com.example.retrofit.Reotp;
+import com.example.retrofit.ModelClass.Reotp;
 import com.example.retrofit.Response.OtpResponse;
 import com.example.retrofit.Response.ResendResponse;
 import com.example.retrofit.Sharedprefs;
